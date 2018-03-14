@@ -1,0 +1,77 @@
+package com.mercateo.eventstore.example;
+
+import org.json.JSONObject;
+
+import com.github.msemys.esjc.ResolvedEvent;
+import com.github.msemys.esjc.proto.EventStoreClientMessages;
+import com.github.msemys.esjc.proto.EventStoreClientMessages.EventRecord;
+import com.google.protobuf.ByteString;
+import com.mercateo.eventstore.domain.Event;
+
+public class TestEventBuilder {
+
+    public static ResolvedEvent buildResolvedEvent_v1(String streamName, Event event, String eventType,
+            JSONObject eventData) {
+        EventRecord eventRecord = buildEventRecord_v1(streamName, event, eventType, eventData);
+        return toResolvedEvent(eventRecord);
+    }
+
+    public static ResolvedEvent buildResolvedEvent_v2(String streamName, Event event, String eventType,
+            JSONObject eventData) {
+        EventRecord eventRecord = buildEventRecord_v2(streamName, event, eventType, eventData);
+        return toResolvedEvent(eventRecord);
+    }
+
+    public static EventRecord buildEventRecord_v1(String streamName, Event event, String eventType,
+            JSONObject eventData) {
+        String metaData = createLegacyMetaData(event);
+        return buildEventRecord(streamName, event, eventType, eventData, metaData);
+    }
+
+    public static EventRecord buildEventRecord_v2(String streamName, Event event, String eventType,
+            JSONObject eventData) {
+        String metaData = createMetaData(event);
+        return buildEventRecord(streamName, event, eventType, eventData, metaData);
+    }
+
+    public static EventRecord buildEventRecord(String streamName, Event event, String eventType, JSONObject eventData,
+            String metaData) {
+        return EventRecord
+            .newBuilder()
+            .setEventStreamId(streamName)
+            .setEventNumber(1)
+            .setEventType(eventType)
+            .setEventId(ByteString.copyFromUtf8(event.eventId().value().toString()))
+            .setData(ByteString.copyFromUtf8(eventData.toString()))
+            .setDataContentType(1)
+            .setMetadata(ByteString.copyFromUtf8(metaData))
+            .setMetadataContentType(1)
+            .build();
+    }
+
+    public static ResolvedEvent toResolvedEvent(EventRecord record) {
+        return new ResolvedEvent(EventStoreClientMessages.ResolvedEvent
+            .newBuilder()
+            .setPreparePosition(0)
+            .setCommitPosition(0)
+            .setEvent(record)
+            .build());
+    }
+
+    public static String createLegacyMetaData(Event event) {
+        return new JSONObject()//
+            .put("eventId", event.eventId().value())
+            .put("schema", new JSONObject())
+            .toString();
+    }
+
+    public static String createMetaData(Event event) {
+        return new JSONObject()
+            .put("eventId", event.eventId().value())
+            .put("schemaRef", "https://awesomeschema.org/something-happened_1.json")
+            .put("eventType", event.eventType().value())
+            .put("version", 1)
+            .toString();
+    }
+
+}

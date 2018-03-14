@@ -1,0 +1,30 @@
+# -- Maven
+/target
+*/target
+/*.versionsBackup
+/jgiven-reports
+
+# -- Gradle
+/.gradle
+/build
+
+# -- Eclipse
+.classpath
+.project
+.factorypath
+.settings
+bin
+.factorypath
+
+# -- IntelliJ IDEA
+.idea
+*.iml
+/*.ipr
+/*.iws
+
+# -- Mac OS
+.DS_Store
+
+# -- Java
+hs_err_pid*
+/.apt_generated/

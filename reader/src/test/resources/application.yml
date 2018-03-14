@@ -1,0 +1,17 @@
+---
+eventstores:
+  - name: default
+    host: localhost
+    port: 1113
+    username: admin
+    password: changeit
+
+---
+
+spring:
+  profiles: local, dev
+
+eventstore:
+  port: 1113
+  host: 127.0.0.1 
+
