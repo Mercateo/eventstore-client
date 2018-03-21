@@ -29,7 +29,6 @@ import com.mercateo.eventstore.example.TestData;
 import com.mercateo.eventstore.example.TestEventBuilder;
 import com.mercateo.eventstore.json.JsonMapper;
 
-import groovy.json.JsonException;
 import io.vavr.collection.List;
 import io.vavr.control.Either;
 
@@ -92,7 +91,7 @@ public class EventHandlerTest {
     @Test
     public void doesNotCallEventHandler_ifObjectMapperThrowsException() throws Exception {
         when(jsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
-                Object.class)).thenReturn(Either.left(EventStoreFailure.of(new JsonException())));
+                Object.class)).thenReturn(Either.left(EventStoreFailure.of(new RuntimeException())));
         uut.onEvent(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT);
 
         verify(eventConsumer, never()).onEvent(any(), any());
