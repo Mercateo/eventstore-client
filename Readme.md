@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/Mercateo/eventstore-client.svg?branch=master)](https://travis-ci.org/Mercateo/eventstore-client)
+[![Coverage Status](https://coveralls.io/repos/github/Mercateo/eventstore-client/badge.svg?branch=master)](https://coveralls.io/github/Mercateo/eventstore-client?branch=master)
+[![MavenCentral](https://img.shields.io/maven-central/v/com.mercateo.eventstore/parent.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.mercateo.eventstore%22%20AND%20a%3A%22client-reader%22)
+
+
 # Eventstore Client
 
 The official Event Store page can be found at https://eventstore.org/
