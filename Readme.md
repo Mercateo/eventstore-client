@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/Mercateo/eventstore-client.svg?branch=master)](https://travis-ci.org/Mercateo/eventstore-client)
 [![Coverage Status](https://coveralls.io/repos/github/Mercateo/eventstore-client/badge.svg?branch=master)](https://coveralls.io/github/Mercateo/eventstore-client?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c6082fb259ea4884a54007b15360d409)](https://www.codacy.com/app/wuan/eventstore-client?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Mercateo/eventstore-client&amp;utm_campaign=Badge_Grade)
 [![MavenCentral](https://img.shields.io/maven-central/v/com.mercateo.eventstore/parent.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.mercateo.eventstore%22%20AND%20a%3A%22client-reader%22)
 
 
