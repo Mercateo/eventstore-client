@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.github.msemys.esjc.CatchUpSubscription;
 import com.mercateo.common.ComponentTest;
-import com.mercateo.eventstore.connection.EventStores;
 import com.mercateo.eventstore.connection.EventStream;
 import com.mercateo.eventstore.example.TestData;
 import com.mercateo.eventstore.json.EventJsonMapper;

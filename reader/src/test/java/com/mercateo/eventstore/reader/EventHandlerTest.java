@@ -2,7 +2,6 @@ package com.mercateo.eventstore.reader;
 
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_STREAM_ID;
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_TYPE;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;

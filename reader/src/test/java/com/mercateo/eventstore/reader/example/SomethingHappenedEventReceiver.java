@@ -8,6 +8,7 @@ import com.mercateo.eventstore.example.SomethingHappened;
 public class SomethingHappenedEventReceiver {
 
     public void on(@SuppressWarnings("unused") final SomethingHappened event) {
+        // intentionally left empty
     }
 
 }
