@@ -4,8 +4,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
-import java.util.concurrent.TimeUnit;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -35,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @ActiveProfiles({ "test" })
 @Category(IntegrationTest.class)
 @Slf4j
-public class EventStoreListenerRecordedDataHandlerIntegrationTest {
+public class EventStreamListenerIntegrationTest {
 
     @Autowired
     private EventStores eventStores;
@@ -50,19 +48,15 @@ public class EventStoreListenerRecordedDataHandlerIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        eventStream = eventStores
-            .getEventStream(SomethingHappened.EVENT_STREAM_ID)
-            .get();
+        eventStream = eventStores.getEventStream(SomethingHappened.EVENT_STREAM_ID).get();
     }
 
     @Test
     public void callsHandlersWhenEventsAreAvailable() throws Exception {
-        val streamListener = eventListeners
-            .getStreamListener(SomethingHappened.EVENT_STREAM_ID)
-            .get();
+        val streamListener = eventListeners.getStreamListener(SomethingHappened.EVENT_STREAM_ID).get();
 
         val event = TestData.SOMETHING_HAPPENED;
-        EventReadResult eventReadResult = eventStream.readEvent(0, true).get(5, TimeUnit.SECONDS);
+        EventReadResult eventReadResult = eventStream.readEvent(0, true).get(5, SECONDS);
         if (eventReadResult.status != EventReadStatus.Success) {
 
             val eventData = EventData

@@ -5,7 +5,6 @@ import static com.mercateo.eventstore.example.SomethingHappened.EVENT_STREAM_ID;
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_TYPE;
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_VERSION;
 
-import com.mercateo.eventstore.example.SomethingHappenedData;
 import org.springframework.stereotype.Component;
 
 import com.mercateo.eventstore.domain.EventSchemaRef;
@@ -13,6 +12,7 @@ import com.mercateo.eventstore.domain.EventStreamId;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.domain.EventVersion;
 import com.mercateo.eventstore.example.SomethingHappened;
+import com.mercateo.eventstore.example.SomethingHappenedData;
 import com.mercateo.eventstore.writer.EventConfiguration;
 
 import io.vavr.Function1;

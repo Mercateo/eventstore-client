@@ -1,6 +1,7 @@
 package com.mercateo.eventstore.reader;
 
 import com.mercateo.eventstore.domain.EventStreamId;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -14,16 +15,16 @@ public class EventStreamState {
         this.streamId = streamId;
     }
 
+    public State getState() {
+        return state;
+    }
+
     public void setState(State state) {
         if (state != this.state) {
             log.info("state transition for {}: {} -> {}", streamId, this.state, state);
         }
 
         this.state = state;
-    }
-
-    public State getState() {
-        return state;
     }
 
     public EventStreamId getStreamId() {

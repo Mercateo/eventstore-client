@@ -2,9 +2,7 @@ package com.mercateo.eventstore.writer;
 
 import com.mercateo.eventstore.domain.Event;
 import com.mercateo.eventstore.domain.EventSchemaRef;
-import com.mercateo.eventstore.domain.EventStoreName;
 import com.mercateo.eventstore.domain.EventStreamId;
-import com.mercateo.eventstore.domain.EventStreamName;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.domain.EventVersion;
 

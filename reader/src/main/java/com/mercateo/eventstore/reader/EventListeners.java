@@ -38,7 +38,7 @@ public class EventListeners {
     private final Option<EventMetrics> metricsClient;
 
     public EventListeners(
-            @SuppressWarnings("rawtypes") java.util.Optional<java.util.List<EventConsumer<?>>> recordedEventDataHandlers,
+            @SuppressWarnings("rawtypes") Optional<java.util.List<EventConsumer<?>>> recordedEventDataHandlers,
             Optional<EventMetrics> metricsClient, EventStores eventStores, MetadataMapper metadataMapper,
             EventJsonMapper eventJsonMapper, EventSubscriptionHealthIndicator healthIndicator) {
         this.metricsClient = metricsClient.map(Option::some).orElse(Option.none());

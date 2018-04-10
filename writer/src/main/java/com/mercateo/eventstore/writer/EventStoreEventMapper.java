@@ -35,7 +35,7 @@ public class EventStoreEventMapper {
     private final Map<EventType, EventConfiguration> configurations;
 
     public EventStoreEventMapper(@SuppressWarnings("rawtypes") Optional<java.util.List<EventConfiguration>> dataMappers,
-                                 EventJsonMapper eventJsonMapper, EventMetaDataMapper metaDataMapper) {
+            EventJsonMapper eventJsonMapper, EventMetaDataMapper metaDataMapper) {
         this.configurations = List//
             .ofAll(dataMappers.orElse(Collections.emptyList()))
             .groupBy(EventConfiguration::getType)

@@ -2,8 +2,6 @@ package com.mercateo.eventstore.reader;
 
 import static org.mockito.Mockito.verify;
 
-import com.mercateo.eventstore.reader.config.EventStoreReaderConfiguration;
-import io.vavr.control.Option;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -21,13 +19,15 @@ import com.mercateo.eventstore.connection.EventStores;
 import com.mercateo.eventstore.connection.EventStream;
 import com.mercateo.eventstore.example.TestData;
 import com.mercateo.eventstore.json.EventJsonMapper;
+import com.mercateo.eventstore.reader.config.EventStoreReaderConfiguration;
 import com.mercateo.eventstore.reader.example.SomethingHappenedEventConsumer;
 import com.mercateo.eventstore.reader.example.SomethingHappenedEventReceiver;
 
 import io.vavr.collection.List;
+import io.vavr.control.Option;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {EventStoreReaderConfiguration.class, SomethingHappenedEventConsumer.class})
+@ContextConfiguration(classes = { EventStoreReaderConfiguration.class, SomethingHappenedEventConsumer.class })
 @ActiveProfiles({ "test" })
 @Category(ComponentTest.class)
 public class EventStoreListenerComponentTest {
@@ -57,8 +57,8 @@ public class EventStoreListenerComponentTest {
 
     @Before
     public void setUp() throws Exception {
-        uut = new EventStreamListener(new EventHandler(List.of(dataHandler), eventJsonMapper, metadataMapper), eventStream,
-                new EventStatisticsCollector(eventStream, Option.none()));
+        uut = new EventStreamListener(new EventHandler(List.of(dataHandler), eventJsonMapper, metadataMapper),
+                eventStream, new EventStatisticsCollector(eventStream, Option.none()));
     }
 
     @Test

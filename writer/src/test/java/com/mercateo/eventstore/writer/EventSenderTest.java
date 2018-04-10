@@ -5,7 +5,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.concurrent.CompletableFuture;
 
-import com.mercateo.eventstore.domain.EventStreamId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -20,6 +19,7 @@ import com.mercateo.eventstore.connection.EventStores;
 import com.mercateo.eventstore.connection.EventStream;
 import com.mercateo.eventstore.domain.EventStoreFailure;
 import com.mercateo.eventstore.domain.EventStoreName;
+import com.mercateo.eventstore.domain.EventStreamId;
 import com.mercateo.eventstore.domain.EventStreamName;
 
 import io.vavr.control.Either;
@@ -29,7 +29,8 @@ import io.vavr.control.Option;
 @Category(UnitTest.class)
 public class EventSenderTest {
 
-    private final EventStreamId eventStreamId = EventStreamId.of(EventStoreName.of("writeEvent-store"), EventStreamName.of("writeEvent-stream"));
+    private final EventStreamId eventStreamId = EventStreamId.of(EventStoreName.of("writeEvent-store"), EventStreamName
+        .of("writeEvent-stream"));
 
     private final EventData event = EventData.newBuilder().type("event").build();
 
@@ -44,14 +45,14 @@ public class EventSenderTest {
     private EventSender uut;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         when(eventstores.getEventStream(eventStreamId)).thenReturn(Option.of(eventStream));
 
         uut = new EventSender(eventstores);
     }
 
     @Test
-    public void shouldAppendEventToStream() throws Exception {
+    public void shouldAppendEventToStream() {
 
         WriteResult writeResult = new WriteResult(0, null);
         CompletableFuture<WriteResult> value = CompletableFuture.completedFuture(writeResult);
@@ -63,7 +64,7 @@ public class EventSenderTest {
     }
 
     @Test
-    public void shouldReturnFailure_IfEventStreamThrows() throws Exception {
+    public void shouldReturnFailure_IfEventStreamThrows() {
 
         when(eventStream.append(event)).thenThrow(new RuntimeException());
 

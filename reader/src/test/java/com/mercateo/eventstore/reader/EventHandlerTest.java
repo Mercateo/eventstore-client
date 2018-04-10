@@ -45,6 +45,7 @@ public class EventHandlerTest {
     private MetadataMapper metadataMapper;
 
     @Mock
+    @SuppressWarnings("unused")
     private CatchUpSubscription catchUpSubscription;
 
     private EventHandler uut;
@@ -58,7 +59,7 @@ public class EventHandlerTest {
     }
 
     @Test
-    public void callsEventHandler_onValidEvent() throws Exception {
+    public void callsEventHandlerOnValidEvent() throws Exception {
         Object data = mock(Object.class);
         when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
                 Object.class)).thenReturn(Either.right(data));
@@ -76,7 +77,7 @@ public class EventHandlerTest {
     }
 
     @Test
-    public void doesNotCallEventHandler_onValidEventOfAnotherType() throws Exception {
+    public void doesNotCallEventHandlerOnValidEventOfAnotherType() throws Exception {
         EventRecord record = EventRecord
             .newBuilder(TestData.SOMETHING_HAPPENED_EVENT_RECORD)
             .setEventType("anotherType")
@@ -89,7 +90,7 @@ public class EventHandlerTest {
     }
 
     @Test
-    public void doesNotCallEventHandler_ifObjectMapperThrowsException() throws Exception {
+    public void doesNotCallEventHandlerIfObjectMapperThrowsException() throws Exception {
         when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
                 Object.class)).thenReturn(Either.left(EventStoreFailure.of(new RuntimeException())));
         uut.onEvent(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT);

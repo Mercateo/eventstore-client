@@ -80,8 +80,8 @@ public class EventStoresTest {
         val failure = EventStoreFailure.of(throwable);
         when(eventStoreFactory.createEventStore(properties)).thenReturn(Either.left(failure));
 
-        val result1 = uut.getEventStore(EVENT_STORE_NAME);
-        val result2 = uut.getEventStore(EVENT_STORE_NAME);
+        uut.getEventStore(EVENT_STORE_NAME);
+        uut.getEventStore(EVENT_STORE_NAME);
 
         verify(eventStoreFactory, times(2)).createEventStore(properties);
     }

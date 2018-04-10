@@ -1,7 +1,8 @@
 package com.mercateo.eventstore.domain;
 
-import javax.validation.constraints.NotNull;
 import java.time.Instant;
+
+import javax.validation.constraints.NotNull;
 
 public interface EventData {
 

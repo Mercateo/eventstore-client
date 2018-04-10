@@ -1,12 +1,12 @@
 package com.mercateo.eventstore.reader.example;
 
-import com.mercateo.eventstore.domain.EventStreamId;
-import com.mercateo.eventstore.example.SomethingHappenedData;
 import org.springframework.stereotype.Component;
 
 import com.mercateo.eventstore.domain.EventMetadata;
+import com.mercateo.eventstore.domain.EventStreamId;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.example.SomethingHappened;
+import com.mercateo.eventstore.example.SomethingHappenedData;
 import com.mercateo.eventstore.reader.EventConsumer;
 
 import lombok.AllArgsConstructor;

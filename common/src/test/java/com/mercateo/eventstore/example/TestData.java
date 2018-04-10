@@ -58,12 +58,12 @@ public final class TestData {
     public static final String EVENT_DATA = EVENT_DATA_JSON.toString();
 
     public static final ResolvedEvent EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT = TestEventBuilder
-        .buildResolvedEvent_v1(STREAM_NAME, SOMETHING_HAPPENED, SomethingHappened.EVENT_TYPE.value(), EVENT_DATA_JSON);
+        .buildResolvedEventV1(STREAM_NAME, SOMETHING_HAPPENED, SomethingHappened.EVENT_TYPE.value(), EVENT_DATA_JSON);
 
     public static final ResolvedEvent EVENT_STORE_RESOLVED_SOMETHING_HAPPENED_EVENT = TestEventBuilder
-        .buildResolvedEvent_v2(STREAM_NAME, SOMETHING_HAPPENED, SomethingHappened.EVENT_TYPE.value(), EVENT_DATA_JSON);
+        .buildResolvedEventV2(STREAM_NAME, SOMETHING_HAPPENED, SomethingHappened.EVENT_TYPE.value(), EVENT_DATA_JSON);
 
-    public static final EventRecord SOMETHING_HAPPENED_EVENT_RECORD = TestEventBuilder.buildEventRecord_v1(STREAM_NAME,
+    public static final EventRecord SOMETHING_HAPPENED_EVENT_RECORD = TestEventBuilder.buildEventRecordV1(STREAM_NAME,
             SOMETHING_HAPPENED, SomethingHappened.EVENT_TYPE.value(), EVENT_DATA_JSON);
 
     public static final RecordedEvent SOMETHING_HAPPENED_RECORDED_EVENT = EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event;

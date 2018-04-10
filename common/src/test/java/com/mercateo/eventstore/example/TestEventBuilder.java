@@ -10,25 +10,25 @@ import com.mercateo.eventstore.domain.Event;
 
 public class TestEventBuilder {
 
-    public static ResolvedEvent buildResolvedEvent_v1(String streamName, Event event, String eventType,
+    public static ResolvedEvent buildResolvedEventV1(String streamName, Event event, String eventType,
             JSONObject eventData) {
-        EventRecord eventRecord = buildEventRecord_v1(streamName, event, eventType, eventData);
+        EventRecord eventRecord = buildEventRecordV1(streamName, event, eventType, eventData);
         return toResolvedEvent(eventRecord);
     }
 
-    public static ResolvedEvent buildResolvedEvent_v2(String streamName, Event event, String eventType,
+    public static ResolvedEvent buildResolvedEventV2(String streamName, Event event, String eventType,
             JSONObject eventData) {
-        EventRecord eventRecord = buildEventRecord_v2(streamName, event, eventType, eventData);
+        EventRecord eventRecord = buildEventRecordV2(streamName, event, eventType, eventData);
         return toResolvedEvent(eventRecord);
     }
 
-    public static EventRecord buildEventRecord_v1(String streamName, Event event, String eventType,
+    public static EventRecord buildEventRecordV1(String streamName, Event event, String eventType,
             JSONObject eventData) {
         String metaData = createLegacyMetaData(event);
         return buildEventRecord(streamName, event, eventType, eventData, metaData);
     }
 
-    public static EventRecord buildEventRecord_v2(String streamName, Event event, String eventType,
+    public static EventRecord buildEventRecordV2(String streamName, Event event, String eventType,
             JSONObject eventData) {
         String metaData = createMetaData(event);
         return buildEventRecord(streamName, event, eventType, eventData, metaData);

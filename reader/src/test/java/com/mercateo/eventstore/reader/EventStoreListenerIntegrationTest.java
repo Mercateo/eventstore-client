@@ -6,8 +6,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
-import java.util.concurrent.TimeUnit;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -37,7 +35,7 @@ import lombok.val;
 public class EventStoreListenerIntegrationTest {
 
     @Autowired
-    EventListeners eventListeners;
+    private EventListeners eventListeners;
 
     @Autowired
     private EventStores eventStores;
@@ -61,7 +59,7 @@ public class EventStoreListenerIntegrationTest {
         val event = TestData.SOMETHING_HAPPENED;
 
         EventReadResult eventReadResult = eventStore.readEvent(EVENT_STREAM_ID.eventStreamName().value(), 0, true).get(
-                5, TimeUnit.SECONDS);
+                5, SECONDS);
         if (eventReadResult.status != EventReadStatus.Success) {
             EventData eventData = EventData
                 .newBuilder()

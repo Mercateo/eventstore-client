@@ -32,7 +32,8 @@ class EventHandler {
 
     private final Map<Class<?>, List<EventConsumer<?>>> consumersBySerializableType;
 
-    public EventHandler(List<EventConsumer<?>> consumers, EventJsonMapper eventJsonMapper, MetadataMapper metadataMapper) {
+    public EventHandler(List<EventConsumer<?>> consumers, EventJsonMapper eventJsonMapper,
+            MetadataMapper metadataMapper) {
         this.consumers = consumers.groupBy(EventConsumer::eventType).mapKeys(EventType::value);
         consumersBySerializableType = consumers.groupBy(EventConsumer::getSerializableDataType);
         this.eventJsonMapper = eventJsonMapper;
@@ -52,8 +53,8 @@ class EventHandler {
 
     private void mapAndNotify(EventConsumer<?> consumer, RecordedEvent recordedEvent) {
         val mapData = Function2.of(this::mapData).apply(consumer.getSerializableDataType());
-        val streamMetadata = StreamMetadata.of(consumer.eventStreamId(), EventNumber.of(
-                recordedEvent.eventNumber), EventType.of(recordedEvent.eventType));
+        val streamMetadata = StreamMetadata.of(consumer.eventStreamId(), EventNumber.of(recordedEvent.eventNumber),
+                EventType.of(recordedEvent.eventType));
         val mapMetadata = Function2.of(this::mapMetadata).apply(streamMetadata);
 
         Either. //

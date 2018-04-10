@@ -26,7 +26,8 @@ public class EventStreamListener implements CatchUpSubscriptionListener {
 
     private long eventNumber;
 
-    public EventStreamListener(EventHandler eventHandler, EventStream eventStream, EventStatisticsCollector eventStatisticsCollector) {
+    public EventStreamListener(EventHandler eventHandler, EventStream eventStream,
+            EventStatisticsCollector eventStatisticsCollector) {
         this.eventHandler = eventHandler;
         this.eventStream = eventStream;
         this.eventStatisticsCollector = eventStatisticsCollector;

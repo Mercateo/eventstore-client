@@ -1,11 +1,16 @@
 package com.mercateo.eventstore.domain;
 
-import com.mercateo.immutables.Tuple;
 import org.immutables.value.Value;
+
+import com.mercateo.immutables.Tuple;
 
 @Value.Immutable
 @Tuple
 public abstract class EventStreamId {
+
+    public static EventStreamId of(EventStoreName eventStoreName, EventStreamName eventStreamName) {
+        return ImmutableEventStreamId.of(eventStoreName, eventStreamName);
+    }
 
     public abstract EventStoreName eventStoreName();
 
@@ -14,9 +19,5 @@ public abstract class EventStreamId {
     @Override
     public String toString() {
         return "EventStreamId{" + eventStoreName() + "/" + eventStreamName() + "}";
-    }
-
-    public static EventStreamId of(EventStoreName eventStoreName, EventStreamName eventStreamName) {
-        return ImmutableEventStreamId.of(eventStoreName, eventStreamName);
     }
 }
