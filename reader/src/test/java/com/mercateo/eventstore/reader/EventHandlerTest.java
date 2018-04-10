@@ -2,6 +2,7 @@ package com.mercateo.eventstore.reader;
 
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_STREAM_ID;
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_TYPE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -51,7 +52,7 @@ public class EventHandlerTest {
     private EventHandler uut;
 
     @Before
-    public void setup() {
+    public void setUp() {
         when(eventConsumer.eventStreamId()).thenReturn(EVENT_STREAM_ID);
         when(eventConsumer.eventType()).thenReturn(EVENT_TYPE);
         doReturn(Object.class).when(eventConsumer).getSerializableDataType();
@@ -59,7 +60,7 @@ public class EventHandlerTest {
     }
 
     @Test
-    public void callsEventHandlerOnValidEvent() throws Exception {
+    public void callsEventHandlerOnValidEvent() {
         Object data = mock(Object.class);
         when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
                 Object.class)).thenReturn(Either.right(data));
@@ -77,7 +78,7 @@ public class EventHandlerTest {
     }
 
     @Test
-    public void doesNotCallEventHandlerOnValidEventOfAnotherType() throws Exception {
+    public void doesNotCallEventHandlerOnValidEventOfAnotherType() {
         EventRecord record = EventRecord
             .newBuilder(TestData.SOMETHING_HAPPENED_EVENT_RECORD)
             .setEventType("anotherType")
@@ -90,7 +91,7 @@ public class EventHandlerTest {
     }
 
     @Test
-    public void doesNotCallEventHandlerIfObjectMapperThrowsException() throws Exception {
+    public void doesNotCallEventHandlerIfObjectMapperThrowsException() {
         when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
                 Object.class)).thenReturn(Either.left(EventStoreFailure.of(new RuntimeException())));
         uut.onEvent(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT);
@@ -99,7 +100,7 @@ public class EventHandlerTest {
     }
 
     @Test
-    public void catchesExceptionsThrownByHandler() throws Exception {
+    public void catchesExceptionsThrownByHandler() {
         Object data = mock(Object.class);
         when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
                 Object.class)).thenReturn(Either.right(data));

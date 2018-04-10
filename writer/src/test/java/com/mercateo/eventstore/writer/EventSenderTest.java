@@ -64,7 +64,7 @@ public class EventSenderTest {
     }
 
     @Test
-    public void shouldReturnFailure_IfEventStreamThrows() {
+    public void shouldReturnFailureIfEventStreamThrows() {
 
         when(eventStream.append(event)).thenThrow(new RuntimeException());
 

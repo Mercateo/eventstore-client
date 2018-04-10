@@ -95,18 +95,18 @@ public class EventListeners {
         getStreamListener(eventStreamId).forEach(EventStreamListener::stopSubscription);
     }
 
-    static class EventStoreClient {
+    private static class EventStoreClient {
 
         private final EventStore eventStore;
 
         private final EventStoreName eventStoreName;
 
-        EventStoreClient(EventStore eventStore, EventStoreName eventStoreName) {
+        private EventStoreClient(EventStore eventStore, EventStoreName eventStoreName) {
             this.eventStore = eventStore;
             this.eventStoreName = eventStoreName;
         }
 
-        EventStream createStream(EventStreamName eventStreamName) {
+        private EventStream createStream(EventStreamName eventStreamName) {
             return new EventStream(eventStore, EventStreamId.of(eventStoreName, eventStreamName));
         }
     }

@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MetadataMapper {
 
-    static final EventVersion LEGACY_VERSION = EventVersion.of(0);
+    public static final EventVersion LEGACY_VERSION = EventVersion.of(0);
 
     public Either<EventStoreFailure, EventMetadata> mapMetadata(StreamMetadata streamMetadata,
             SerializableMetadata serializableMetadata) {
@@ -57,7 +57,8 @@ public class MetadataMapper {
                 .build());
     }
 
-    private Either<EventStoreFailure, EventMetadata> mapLegacyMetadata(SerializableMetadata serializableMetadata,
+    private Either<EventStoreFailure, EventMetadata> mapLegacyMetadata(
+            @SuppressWarnings("unused") SerializableMetadata serializableMetadata,
             ImmutableEventMetadata.Builder builder) {
         builder.version(LEGACY_VERSION);
         return Either.right(builder.build());

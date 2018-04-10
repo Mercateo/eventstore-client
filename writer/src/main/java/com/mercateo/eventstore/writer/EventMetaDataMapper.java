@@ -19,7 +19,7 @@ public class EventMetaDataMapper {
 
     private final EventJsonMapper eventJsonMapper;
 
-    Either<EventStoreFailure, String> mapMetaData(Event event, EventConfiguration dataMapper) {
+    public Either<EventStoreFailure, String> mapMetaData(Event event, EventConfiguration dataMapper) {
         val toMetaData = Function2.of(this::toMetaData).apply(dataMapper);
 
         return Either //

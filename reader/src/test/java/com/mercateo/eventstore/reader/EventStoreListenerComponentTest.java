@@ -52,9 +52,6 @@ public class EventStoreListenerComponentTest {
     @Autowired
     private MetadataMapper metadataMapper;
 
-    @Autowired
-    private EventStores eventStores;
-
     @Before
     public void setUp() throws Exception {
         uut = new EventStreamListener(new EventHandler(List.of(dataHandler), eventJsonMapper, metadataMapper),

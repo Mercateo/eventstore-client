@@ -20,7 +20,7 @@ public class EventStoreConfiguration {
 
     @Bean
     @ConfigurationProperties
-    EventStorePropertiesCollection eventStorePropertiesCollection() {
+    public EventStorePropertiesCollection eventStorePropertiesCollection() {
         return new EventStorePropertiesCollection();
     }
 

@@ -68,8 +68,8 @@ public class EventStoresTest {
 
     @Test
     public void cachesEventStoreClient() {
-        val result1 = uut.getEventStore(EVENT_STORE_NAME);
-        val result2 = uut.getEventStore(EVENT_STORE_NAME);
+        uut.getEventStore(EVENT_STORE_NAME);
+        uut.getEventStore(EVENT_STORE_NAME);
 
         verify(eventStoreFactory).createEventStore(properties);
     }
