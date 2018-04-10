@@ -20,10 +20,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.github.msemys.esjc.EventData;
@@ -35,14 +36,18 @@ import com.mercateo.eventstore.config.EventStoreProperties;
 import com.mercateo.eventstore.connection.EventStoreFactory;
 import com.mercateo.eventstore.domain.EventStreamName;
 import com.mercateo.eventstore.example.SomethingHappenedData;
-import com.mercateo.eventstore.json.JsonMapper;
+import com.mercateo.eventstore.json.EventJsonMapper;
+import com.mercateo.eventstore.writer.config.EventStoreWriterConfiguration;
+import com.mercateo.eventstore.writer.example.SomethingHappenedEventConfiguration;
 import com.mercateo.eventstore.writer.example.TestData;
 
 import io.vavr.control.Either;
 import lombok.val;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@ContextConfiguration(classes = { EventStoreWriterConfiguration.class, SomethingHappenedEventConfiguration.class })
+@TestPropertySource(properties = { "eventstores[0].name=default", "eventstores[0].host=127.0.0.1",
+        "eventstores[0].port=1113", "eventstores[0].username=admin", "eventstores[0].password=changeit" })
 @ActiveProfiles({ "test" })
 @Category(ComponentTest.class)
 public class EventStoreWriterComponentTest {
@@ -50,7 +55,7 @@ public class EventStoreWriterComponentTest {
     private final static EventStreamName eventStreamName = EVENT_STREAM_ID.eventStreamName();
 
     @Autowired
-    private JsonMapper jsonMapper;
+    private EventJsonMapper eventJsonMapper;
 
     @Autowired
     private EventStoreWriter uut;
@@ -68,12 +73,17 @@ public class EventStoreWriterComponentTest {
 
     @Before
     public void setUp() {
-        JacksonTester.initFields(this, jsonMapper.objectMapper());
+        JacksonTester.initFields(this, eventJsonMapper.objectMapper());
+    }
+
+    @Test
+    public void shouldWriteEvent() throws IOException {
 
         val writeResult = CompletableFuture.completedFuture(new WriteResult(0, Position.START));
+
         val eventStoreProperties = new EventStoreProperties();
         eventStoreProperties.setName(EVENT_STREAM_ID.eventStoreName().value());
-        eventStoreProperties.setHost("localhost");
+        eventStoreProperties.setHost("127.0.0.1");
         eventStoreProperties.setPort(1113);
         eventStoreProperties.setUsername("admin");
         eventStoreProperties.setPassword("changeit");
@@ -82,10 +92,6 @@ public class EventStoreWriterComponentTest {
 
         when(eventStore.appendToStream(eq(eventStreamName.value()), eq(ANY), any(EventData.class))).thenReturn(
                 writeResult);
-    }
-
-    @Test
-    public void shouldWriteEvent() throws IOException {
 
         val result = uut.write(SOMETHING_HAPPENED);
 

@@ -20,7 +20,7 @@ import com.mercateo.eventstore.domain.Causality;
 import com.mercateo.eventstore.domain.EventId;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.example.SomethingHappened;
-import com.mercateo.eventstore.json.JsonMapper;
+import com.mercateo.eventstore.json.EventJsonMapper;
 import com.mercateo.eventstore.writer.example.TestData;
 
 import lombok.val;
@@ -48,7 +48,7 @@ public class EventMetaDataMapperTest {
 
     @Before
     public void setUp() throws Exception {
-        val jsonMapper = new JsonMapper();
+        val jsonMapper = new EventJsonMapper();
         JacksonTester.initFields(this, jsonMapper.objectMapper());
         uut = new EventMetaDataMapper(jsonMapper);
 

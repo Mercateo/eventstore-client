@@ -12,7 +12,7 @@ import com.github.msemys.esjc.EventData;
 import com.mercateo.eventstore.domain.Event;
 import com.mercateo.eventstore.domain.EventStoreFailure;
 import com.mercateo.eventstore.domain.EventType;
-import com.mercateo.eventstore.json.JsonMapper;
+import com.mercateo.eventstore.json.EventJsonMapper;
 
 import io.vavr.Tuple;
 import io.vavr.collection.List;
@@ -27,7 +27,7 @@ public class EventStoreEventMapper {
 
     private static final EventStoreFailure INTERNAL_FAILURE = EventStoreFailure.builder().type(INTERNAL_ERROR).build();
 
-    private final JsonMapper jsonMapper;
+    private final EventJsonMapper eventJsonMapper;
 
     private final EventMetaDataMapper metaDataMapper;
 
@@ -35,7 +35,7 @@ public class EventStoreEventMapper {
     private final Map<EventType, EventConfiguration> configurations;
 
     public EventStoreEventMapper(@SuppressWarnings("rawtypes") Optional<java.util.List<EventConfiguration>> dataMappers,
-            JsonMapper jsonMapper, EventMetaDataMapper metaDataMapper) {
+                                 EventJsonMapper eventJsonMapper, EventMetaDataMapper metaDataMapper) {
         this.configurations = List//
             .ofAll(dataMappers.orElse(Collections.emptyList()))
             .groupBy(EventConfiguration::getType)
@@ -46,7 +46,7 @@ public class EventStoreEventMapper {
             })
             .mapValues(List::head);
 
-        this.jsonMapper = jsonMapper;
+        this.eventJsonMapper = eventJsonMapper;
         this.metaDataMapper = metaDataMapper;
     }
 
@@ -73,7 +73,7 @@ public class EventStoreEventMapper {
     private Either<EventStoreFailure, EventWriteData> mapEvent(final Event event,
             @SuppressWarnings("rawtypes") EventConfiguration configuration) {
         Object writtenEvent = configuration.mapper().apply(event);
-        return jsonMapper
+        return eventJsonMapper
             .toJsonString(writtenEvent)
             .flatMap(data -> metaDataMapper //
                 .mapMetaData(event, configuration)

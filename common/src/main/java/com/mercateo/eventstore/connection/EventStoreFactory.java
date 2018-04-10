@@ -14,7 +14,7 @@ import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Component("eventStoreFactory")
 public class EventStoreFactory {
     public Either<EventStoreFailure, EventStore> createEventStore(EventStoreProperties properties) {
         return Try.of(() -> createEventStoreInternal(properties)).toEither().mapLeft(this::mapError);

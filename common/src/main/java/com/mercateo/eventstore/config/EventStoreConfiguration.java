@@ -8,14 +8,14 @@ import org.springframework.context.annotation.Import;
 
 import com.mercateo.eventstore.connection.EventStoreFactory;
 import com.mercateo.eventstore.connection.EventStores;
-import com.mercateo.eventstore.json.JsonMapper;
+import com.mercateo.eventstore.json.EventJsonMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @Slf4j
 @EnableConfigurationProperties
-@Import({ EventStoreFactory.class, EventStores.class, JsonMapper.class })
+@Import({ EventStoreFactory.class, EventStores.class, EventJsonMapper.class })
 public class EventStoreConfiguration {
 
     @Bean

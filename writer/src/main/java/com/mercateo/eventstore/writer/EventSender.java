@@ -14,7 +14,7 @@ import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Component("eventSender")
 public class EventSender {
 
     public static final EventStoreFailure NO_EVENT_STORE_FAILURE = EventStoreFailure

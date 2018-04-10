@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Component("subscriptionHealthIndicator")
+@Component("eventSubscriptionHealthIndicator")
 @Slf4j
-public class SubscriptionHealthIndicator extends AbstractHealthIndicator {
+public class EventSubscriptionHealthIndicator extends AbstractHealthIndicator {
 
     private final Set<EventStatisticsCollector> activeMetrics;
 
-    public SubscriptionHealthIndicator() {
+    public EventSubscriptionHealthIndicator() {
         this.activeMetrics = new HashSet<>();
     }
 

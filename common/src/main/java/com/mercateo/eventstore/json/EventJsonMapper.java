@@ -14,13 +14,13 @@ import io.vavr.control.Try;
 import io.vavr.jackson.datatype.VavrModule;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+@Component("eventJsonMapper")
 @Slf4j
-public class JsonMapper {
+public class EventJsonMapper {
 
     private final ObjectMapper objectMapper;
 
-    public JsonMapper() {
+    public EventJsonMapper() {
         objectMapper = new ObjectMapper();
         objectMapper.registerModules(new Jdk8Module(), new JavaTimeModule());
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);

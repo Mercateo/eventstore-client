@@ -31,6 +31,6 @@ public class EventStoreConfigurationTest {
 
         assertThat(list).isNotEmpty();
         val firstElement = list.get(0);
-        assertThat(firstElement.getHost()).contains("localhost");
+        assertThat(firstElement.getHost()).contains("127.0.0.1");
     }
 }

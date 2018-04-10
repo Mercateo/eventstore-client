@@ -1,14 +1,15 @@
 package com.mercateo.eventstore.reader.config;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import com.mercateo.eventstore.config.EventStoreConfiguration;
-import com.mercateo.eventstore.reader.EventStoreReaderPackage;
+import com.mercateo.eventstore.reader.EventListeners;
+import com.mercateo.eventstore.reader.EventSubscriptionHealthIndicator;
+import com.mercateo.eventstore.reader.MetadataMapper;
 
 @Configuration
-@ComponentScan(basePackageClasses = EventStoreReaderPackage.class)
-@Import(EventStoreConfiguration.class)
+@Import({ EventStoreConfiguration.class, EventListeners.class, MetadataMapper.class,
+        EventSubscriptionHealthIndicator.class })
 public class EventStoreReaderConfiguration {
 }

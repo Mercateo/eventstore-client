@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-class MetadataMapper {
+public class MetadataMapper {
 
     static final EventVersion LEGACY_VERSION = EventVersion.of(0);
 

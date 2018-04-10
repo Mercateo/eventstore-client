@@ -1,18 +1,16 @@
 package com.mercateo.eventstore.connection;
 
+import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.mercateo.eventstore.domain.EventStreamId;
 import org.springframework.stereotype.Component;
 
 import com.github.msemys.esjc.EventStore;
 import com.mercateo.eventstore.config.EventStoreProperties;
 import com.mercateo.eventstore.config.EventStorePropertiesCollection;
 import com.mercateo.eventstore.domain.EventStoreName;
-import com.mercateo.eventstore.domain.EventStreamName;
+import com.mercateo.eventstore.domain.EventStreamId;
 
-import io.vavr.Tuple;
-import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import io.vavr.control.Either;
@@ -20,7 +18,7 @@ import io.vavr.control.Option;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Component("eventStores")
 public class EventStores {
 
     private final EventStoreFactory factory;
@@ -37,7 +35,7 @@ public class EventStores {
         eventstreams = new ConcurrentHashMap<>();
 
         eventStoreProperties = List
-            .ofAll(properties.getEventstores())
+            .ofAll(Option.of(properties.getEventstores()).getOrElse(Collections.emptyList()))
             .groupBy(EventStoreProperties::getName)
             .mapKeys(EventStoreName::of)
             .mapValues(List::head);
@@ -48,10 +46,8 @@ public class EventStores {
     }
 
     public Option<EventStream> getEventStream(EventStreamId eventStreamId) {
-        return Option.of(eventstreams.computeIfAbsent(eventStreamId,
-                definition -> getEventStore(eventStreamId.eventStoreName())
-                    .map(eventStore -> new EventStream(eventStore, eventStreamId))
-                    .getOrNull()));
+        return Option.of(eventstreams.computeIfAbsent(eventStreamId, definition -> getEventStore(eventStreamId
+            .eventStoreName()).map(eventStore -> new EventStream(eventStore, eventStreamId)).getOrNull()));
     }
 
     private Option<EventStore> createEventStore(EventStoreName eventStoreName) {

@@ -18,7 +18,7 @@ import com.mercateo.eventstore.writer.EventConfiguration;
 import io.vavr.Function1;
 
 @Component
-class SomethingHappenedEventConfiguration implements EventConfiguration<SomethingHappened> {
+public class SomethingHappenedEventConfiguration implements EventConfiguration<SomethingHappened> {
 
     public SomethingHappenedData map(SomethingHappened somethingHappened) {
         return SomethingHappenedData.builder().timestamp(somethingHappened.timestamp()).build();

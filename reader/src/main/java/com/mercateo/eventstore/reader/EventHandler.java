@@ -9,7 +9,7 @@ import com.mercateo.eventstore.domain.EventMetadata;
 import com.mercateo.eventstore.domain.EventNumber;
 import com.mercateo.eventstore.domain.EventStoreFailure;
 import com.mercateo.eventstore.domain.EventType;
-import com.mercateo.eventstore.json.JsonMapper;
+import com.mercateo.eventstore.json.EventJsonMapper;
 
 import io.vavr.Function2;
 import io.vavr.Tuple;
@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class EventHandler {
 
-    private final JsonMapper jsonMapper;
+    private final EventJsonMapper eventJsonMapper;
 
     private final MetadataMapper metadataMapper;
 
@@ -32,10 +32,10 @@ class EventHandler {
 
     private final Map<Class<?>, List<EventConsumer<?>>> consumersBySerializableType;
 
-    public EventHandler(List<EventConsumer<?>> consumers, JsonMapper jsonMapper, MetadataMapper metadataMapper) {
+    public EventHandler(List<EventConsumer<?>> consumers, EventJsonMapper eventJsonMapper, MetadataMapper metadataMapper) {
         this.consumers = consumers.groupBy(EventConsumer::eventType).mapKeys(EventType::value);
         consumersBySerializableType = consumers.groupBy(EventConsumer::getSerializableDataType);
-        this.jsonMapper = jsonMapper;
+        this.eventJsonMapper = eventJsonMapper;
         this.metadataMapper = metadataMapper;
     }
 
@@ -67,7 +67,7 @@ class EventHandler {
 
     private Either<EventStoreFailure, Tuple2<Object, byte[]>> mapData(Class<?> serializableType,
             Tuple2<byte[], byte[]> tuple) {
-        return jsonMapper //
+        return eventJsonMapper //
             .readValue(tuple._1(), serializableType)
             .map(event -> Tuple.of(event, tuple._2()));
     }
@@ -76,7 +76,7 @@ class EventHandler {
             Tuple2<Object, byte[]> tuple) {
         val mapMetadata = Function2.of(metadataMapper::mapMetadata).apply(streamMetadata);
 
-        return jsonMapper //
+        return eventJsonMapper //
             .readValue(tuple._2(), SerializableMetadata.class)
             .flatMap(mapMetadata)
             .map(metadata -> Tuple.of(tuple._1(), metadata));

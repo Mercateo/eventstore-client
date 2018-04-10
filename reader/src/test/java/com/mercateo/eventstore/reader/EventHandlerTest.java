@@ -27,7 +27,7 @@ import com.mercateo.eventstore.domain.EventNumber;
 import com.mercateo.eventstore.domain.EventStoreFailure;
 import com.mercateo.eventstore.example.TestData;
 import com.mercateo.eventstore.example.TestEventBuilder;
-import com.mercateo.eventstore.json.JsonMapper;
+import com.mercateo.eventstore.json.EventJsonMapper;
 
 import io.vavr.collection.List;
 import io.vavr.control.Either;
@@ -39,7 +39,7 @@ public class EventHandlerTest {
     private EventConsumer<Object> eventConsumer;
 
     @Mock
-    private JsonMapper jsonMapper;
+    private EventJsonMapper eventJsonMapper;
 
     @Mock
     private MetadataMapper metadataMapper;
@@ -54,16 +54,16 @@ public class EventHandlerTest {
         when(eventConsumer.eventStreamId()).thenReturn(EVENT_STREAM_ID);
         when(eventConsumer.eventType()).thenReturn(EVENT_TYPE);
         doReturn(Object.class).when(eventConsumer).getSerializableDataType();
-        uut = new EventHandler(List.of(eventConsumer), jsonMapper, metadataMapper);
+        uut = new EventHandler(List.of(eventConsumer), eventJsonMapper, metadataMapper);
     }
 
     @Test
     public void callsEventHandler_onValidEvent() throws Exception {
         Object data = mock(Object.class);
-        when(jsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
+        when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
                 Object.class)).thenReturn(Either.right(data));
         SerializableMetadata metadata = mock(SerializableMetadata.class);
-        when(jsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.metadata,
+        when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.metadata,
                 SerializableMetadata.class)).thenReturn(Either.right(metadata));
         EventMetadata eventMetadata = mock(EventMetadata.class);
 
@@ -90,7 +90,7 @@ public class EventHandlerTest {
 
     @Test
     public void doesNotCallEventHandler_ifObjectMapperThrowsException() throws Exception {
-        when(jsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
+        when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
                 Object.class)).thenReturn(Either.left(EventStoreFailure.of(new RuntimeException())));
         uut.onEvent(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT);
 
@@ -100,10 +100,10 @@ public class EventHandlerTest {
     @Test
     public void catchesExceptionsThrownByHandler() throws Exception {
         Object data = mock(Object.class);
-        when(jsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
+        when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.data,
                 Object.class)).thenReturn(Either.right(data));
         SerializableMetadata metadata = mock(SerializableMetadata.class);
-        when(jsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.metadata,
+        when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.metadata,
                 SerializableMetadata.class)).thenReturn(Either.right(metadata));
         EventMetadata eventMetadata = mock(EventMetadata.class);
         when(metadataMapper.mapMetadata(StreamMetadata.of(EVENT_STREAM_ID, EventNumber.of(1L), EVENT_TYPE), metadata))
