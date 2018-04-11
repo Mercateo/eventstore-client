@@ -49,11 +49,11 @@ public class EventStoreListenerComponentTest {
     private EventJsonMapper eventJsonMapper;
 
     @Autowired
-    private MetadataMapper metadataMapper;
+    private EventMetadataMapper eventMetadataMapper;
 
     @Before
     public void setUp() throws Exception {
-        uut = new EventStreamListener(new EventHandler(List.of(dataHandler), eventJsonMapper, metadataMapper),
+        uut = new EventStreamListener(new EventHandler(List.of(dataHandler), eventJsonMapper, eventMetadataMapper),
                 eventStream, new EventStatisticsCollector(eventStream, Option.none()));
     }
 

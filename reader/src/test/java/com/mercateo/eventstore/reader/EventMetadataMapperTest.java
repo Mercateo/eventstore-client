@@ -1,7 +1,7 @@
 package com.mercateo.eventstore.reader;
 
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_SCHEMA_REF;
-import static com.mercateo.eventstore.reader.MetadataMapper.LEGACY_VERSION;
+import static com.mercateo.eventstore.reader.EventMetadataMapper.LEGACY_VERSION;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.UUID;
@@ -29,9 +29,9 @@ import lombok.val;
 
 @RunWith(MockitoJUnitRunner.class)
 @Category(UnitTest.class)
-public class MetadataMapperTest {
+public class EventMetadataMapperTest {
 
-    private MetadataMapper uut;
+    private EventMetadataMapper uut;
 
     private EventType eventType;
 
@@ -47,7 +47,7 @@ public class MetadataMapperTest {
 
     @Before
     public void setUp() throws Exception {
-        uut = new MetadataMapper();
+        uut = new EventMetadataMapper();
 
         val eventStoreName = EventStoreName.of("test-store");
         val eventStreamName = EventStreamName.of("test-eventStreamName");

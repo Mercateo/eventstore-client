@@ -3,6 +3,7 @@ package com.mercateo.eventstore.reader;
 import java.util.Collections;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.github.msemys.esjc.EventStore;
@@ -27,7 +28,7 @@ public class EventListeners {
 
     private final EventStores eventStores;
 
-    private final MetadataMapper metadataMapper;
+    private final EventMetadataMapper eventMetadataMapper;
 
     private final EventJsonMapper eventJsonMapper;
 
@@ -39,11 +40,12 @@ public class EventListeners {
 
     public EventListeners(
             @SuppressWarnings("rawtypes") Optional<java.util.List<EventConsumer<?>>> recordedEventDataHandlers,
-            Optional<EventMetrics> metricsClient, EventStores eventStores, MetadataMapper metadataMapper,
-            EventJsonMapper eventJsonMapper, EventSubscriptionHealthIndicator healthIndicator) {
+            Optional<EventMetrics> metricsClient, @Qualifier("eventStores") EventStores eventStores, EventMetadataMapper eventMetadataMapper,
+            @Qualifier("eventJsonMapper") EventJsonMapper eventJsonMapper,
+            @Qualifier("eventSubscriptionHealthIndicator") EventSubscriptionHealthIndicator healthIndicator) {
         this.metricsClient = metricsClient.map(Option::some).orElse(Option.none());
         this.eventStores = eventStores;
-        this.metadataMapper = metadataMapper;
+        this.eventMetadataMapper = eventMetadataMapper;
         this.eventJsonMapper = eventJsonMapper;
         this.healthIndicator = healthIndicator;
 
@@ -72,7 +74,7 @@ public class EventListeners {
             Tuple2<EventStreamId, List<EventConsumer<?>>> entry) {
         val eventStreamId = entry._1();
         val consumers = entry._2();
-        val eventHandler = new EventHandler(consumers, eventJsonMapper, metadataMapper);
+        val eventHandler = new EventHandler(consumers, eventJsonMapper, eventMetadataMapper);
         val eventStream = eventStoreClient.createStream(eventStreamId.eventStreamName());
         val eventStatisticsCollector = new EventStatisticsCollector(eventStream, metricsClient);
         healthIndicator.addToMonitoring(eventStatisticsCollector);

@@ -26,18 +26,18 @@ class EventHandler {
 
     private final EventJsonMapper eventJsonMapper;
 
-    private final MetadataMapper metadataMapper;
+    private final EventMetadataMapper eventMetadataMapper;
 
     private final Map<String, List<EventConsumer<?>>> consumers;
 
     private final Map<Class<?>, List<EventConsumer<?>>> consumersBySerializableType;
 
     public EventHandler(List<EventConsumer<?>> consumers, EventJsonMapper eventJsonMapper,
-            MetadataMapper metadataMapper) {
+            EventMetadataMapper eventMetadataMapper) {
         this.consumers = consumers.groupBy(EventConsumer::eventType).mapKeys(EventType::value);
         consumersBySerializableType = consumers.groupBy(EventConsumer::getSerializableDataType);
         this.eventJsonMapper = eventJsonMapper;
-        this.metadataMapper = metadataMapper;
+        this.eventMetadataMapper = eventMetadataMapper;
     }
 
     public void onEvent(ResolvedEvent event) {
@@ -75,7 +75,7 @@ class EventHandler {
 
     private Either<EventStoreFailure, Tuple2<Object, EventMetadata>> mapMetadata(StreamMetadata streamMetadata,
             Tuple2<Object, byte[]> tuple) {
-        val mapMetadata = Function2.of(metadataMapper::mapMetadata).apply(streamMetadata);
+        val mapMetadata = Function2.of(eventMetadataMapper::mapMetadata).apply(streamMetadata);
 
         return eventJsonMapper //
             .readValue(tuple._2(), SerializableMetadata.class)

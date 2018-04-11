@@ -22,9 +22,9 @@ import io.vavr.control.Try;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+@Component("eventMetadataMapper")
 @Slf4j
-public class MetadataMapper {
+public class EventMetadataMapper {
 
     public static final EventVersion LEGACY_VERSION = EventVersion.of(0);
 
