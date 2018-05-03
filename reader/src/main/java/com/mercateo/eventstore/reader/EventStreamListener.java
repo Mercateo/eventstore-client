@@ -22,8 +22,6 @@ public class EventStreamListener implements CatchUpSubscriptionListener {
 
     private final EventStatisticsCollector eventStatisticsCollector;
 
-    private final EventStreamState eventStreamState;
-
     private long eventNumber;
 
     public EventStreamListener(EventHandler eventHandler, EventStream eventStream,
@@ -31,8 +29,6 @@ public class EventStreamListener implements CatchUpSubscriptionListener {
         this.eventHandler = eventHandler;
         this.eventStream = eventStream;
         this.eventStatisticsCollector = eventStatisticsCollector;
-
-        eventStreamState = eventStatisticsCollector.getState();
     }
 
     @Override
@@ -58,14 +54,14 @@ public class EventStreamListener implements CatchUpSubscriptionListener {
                 .onSuccess(ignore -> log.info("resubscription successful"))
                 .onFailure(e -> {
                     log.error("resubscription failed", e);
-                    eventStreamState.setState(EventStreamState.State.REPLAYING);
+                    setState(EventStreamState.State.REPLAYING);
                 });
         }
 
         if (reason == SubscriptionDropReason.UserInitiated) {
-            eventStreamState.setState(EventStreamState.State.IDLE);
+            setState(EventStreamState.State.IDLE);
         } else {
-            eventStreamState.setState(EventStreamState.State.REPLAYING);
+            setState(EventStreamState.State.REPLAYING);
         }
     }
 
@@ -73,7 +69,7 @@ public class EventStreamListener implements CatchUpSubscriptionListener {
     public void onLiveProcessingStarted(CatchUpSubscription subscription) {
         log.info("onLiveProcessingStarted() {}", eventStream.getEventStreamId());
         eventStatisticsCollector.onLiveProcessingStarted();
-        eventStreamState.setState(EventStreamState.State.LIVE);
+        setState(EventStreamState.State.LIVE);
     }
 
     public long getEventNumber() {
@@ -90,7 +86,11 @@ public class EventStreamListener implements CatchUpSubscriptionListener {
 
     public void subscribe(long eventNumber) {
         eventStream.subscribeToStreamFrom(eventNumber, this);
-        eventStreamState.setState(EventStreamState.State.REPLAYING);
+        setState(EventStreamState.State.REPLAYING);
+    }
+
+    private void setState(EventStreamState.State state) {
+        eventStatisticsCollector.getStreamState().setState(state);
     }
 
     public void stopSubscription() {
@@ -100,4 +100,6 @@ public class EventStreamListener implements CatchUpSubscriptionListener {
     public int consumerCountFor(Class<?> clazz) {
         return eventHandler.consumerCountFor(clazz);
     }
+
+
 }
