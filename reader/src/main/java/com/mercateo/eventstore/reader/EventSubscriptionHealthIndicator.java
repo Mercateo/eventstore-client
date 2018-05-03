@@ -1,5 +1,6 @@
 package com.mercateo.eventstore.reader;
 
+import static com.mercateo.eventstore.reader.EventStreamState.State.LIVE;
 import static com.mercateo.eventstore.reader.EventStreamState.State.REPLAYING;
 
 import java.util.HashSet;
@@ -33,13 +34,13 @@ public class EventSubscriptionHealthIndicator extends AbstractHealthIndicator {
     }
 
     public boolean isHealty() {
-        return activeMetrics.stream().allMatch(metrics -> metrics.getState() != REPLAYING);
+        return activeMetrics.stream().allMatch(metrics -> (metrics.getStreamState().getState() == LIVE ));
     }
 
     private String unhealthySubscriptions() {
         return activeMetrics
             .stream()
-            .filter(metrics -> metrics.getState() == REPLAYING)
+            .filter(metrics -> metrics.getStreamState().getState() == REPLAYING)
             .map(EventStatisticsCollector::getEventStreamId)
             .map(Object::toString)
             .collect(Collectors.joining(", "));
