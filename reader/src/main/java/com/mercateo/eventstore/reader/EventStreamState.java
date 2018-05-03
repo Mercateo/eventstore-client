@@ -13,6 +13,7 @@ public class EventStreamState {
 
     public EventStreamState(EventStreamId streamId) {
         this.streamId = streamId;
+        this.state = State.IDLE;
     }
 
     public State getState() {

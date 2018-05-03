@@ -81,8 +81,8 @@ public class EventStatisticsCollector {
         return getTotalSize() / elapsedTimeInSeconds;
     }
 
-    public EventStreamState.State getState() {
-        return state.getState();
+    public EventStreamState getState() {
+        return state;
     }
 
     public EventStreamId getEventStreamId() {
