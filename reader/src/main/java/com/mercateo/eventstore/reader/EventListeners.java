@@ -78,7 +78,7 @@ public class EventListeners {
         val eventStream = eventStoreClient.createStream(eventStreamId.eventStreamName());
         val eventStatisticsCollector = new EventStatisticsCollector(eventStream, metricsClient);
         healthIndicator.addToMonitoring(eventStatisticsCollector);
-        return List.of(new EventStreamListener(eventHandler, eventStream, eventStatisticsCollector, eventStatisticsCollector.getState()));
+        return List.of(new EventStreamListener(eventHandler, eventStream, eventStatisticsCollector));
     }
 
     public Option<EventStreamListener> getStreamListener(EventStreamId eventStreamId) {

@@ -54,7 +54,7 @@ public class EventStoreListenerComponentTest {
     @Before
     public void setUp() throws Exception {
         uut = new EventStreamListener(new EventHandler(List.of(dataHandler), eventJsonMapper, eventMetadataMapper),
-                eventStream, new EventStatisticsCollector(eventStream, Option.none()), new EventStreamState(eventStream.getEventStreamId()));
+                eventStream, new EventStatisticsCollector(eventStream, Option.none()));
     }
 
     @Test
