@@ -6,6 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.UUID;
 
+import com.mercateo.eventstore.data.EventInitiatorData;
+import com.mercateo.eventstore.domain.EventInitiator;
+import com.mercateo.eventstore.example.TestData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -70,6 +73,7 @@ public class EventMetadataMapperTest {
         assertThat(result.eventNumber()).isEqualTo(eventNumber);
         assertThat(result.eventStreamId()).isEqualTo(eventStreamId);
         assertThat(result.causality()).isEmpty();
+        assertThat(result.eventInitiator()).isEmpty();
         assertThat(result.version()).isEqualTo(LEGACY_VERSION);
     }
 
@@ -89,6 +93,7 @@ public class EventMetadataMapperTest {
         assertThat(result.eventNumber()).isEqualTo(eventNumber);
         assertThat(result.eventStreamId()).isEqualTo(eventStreamId);
         assertThat(result.causality()).isEmpty();
+        assertThat(result.eventInitiator()).isEmpty();
         assertThat(result.version()).isEqualTo(eventVersion);
         assertThat(result.eventSchemaRef()).contains(EVENT_SCHEMA_REF);
     }
@@ -118,6 +123,49 @@ public class EventMetadataMapperTest {
         val result = uut.mapMetadata(streamMetadata, serializableMetadata).get();
 
         assertThat(result.causality()).containsExactlyInAnyOrder(causality1, causality2);
+    }
+
+    @Test
+    public void mapsEventInitiator() {
+        val eventInitiator = EventInitiator
+            .builder()
+            .initiator(TestData.INITIATOR)
+            .build();
+
+        val serializableMetadata = SerializableMetadata
+            .builder()
+            .eventId(eventId.value())
+            .version(eventVersion.value())
+            .schemaRef(EVENT_SCHEMA_REF.value().toString())
+            .eventInitiator(EventInitiatorData.of(eventInitiator))
+            .build();
+
+        val result = uut.mapMetadata(streamMetadata, serializableMetadata).get();
+
+        assertThat(result.eventInitiator()).containsExactlyInAnyOrder(eventInitiator);
+
+    }
+
+    @Test
+    public void mapsEventInitiatorWithImposter() {
+        val eventInitiatorWithImposter = EventInitiator
+                .builder()
+                .initiator(TestData.INITIATOR)
+                .setValueImpersonated(TestData.IMPERSONATOR)
+                .build();
+
+        val serializableMetadata = SerializableMetadata
+                .builder()
+                .eventId(eventId.value())
+                .version(eventVersion.value())
+                .schemaRef(EVENT_SCHEMA_REF.value().toString())
+                .eventInitiator(EventInitiatorData.of(eventInitiatorWithImposter))
+                .build();
+
+        val result = uut.mapMetadata(streamMetadata, serializableMetadata).get();
+
+        assertThat(result.eventInitiator()).containsExactlyInAnyOrder(eventInitiatorWithImposter);
+
     }
 
     @Test

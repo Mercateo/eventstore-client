@@ -46,4 +46,8 @@ public interface SerializableMetadata {
 
     @Nullable
     CausalityData[] causality();
+
+    @Nullable
+    EventInitiatorData eventInitiator();
+
 }

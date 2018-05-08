@@ -1,26 +1,25 @@
 package com.mercateo.eventstore.reader;
 
-import java.net.URI;
-
-import org.springframework.stereotype.Component;
-
 import com.mercateo.eventstore.data.CausalityData;
 import com.mercateo.eventstore.data.SerializableMetadata;
 import com.mercateo.eventstore.domain.Causality;
 import com.mercateo.eventstore.domain.EventId;
+import com.mercateo.eventstore.domain.EventInitiator;
 import com.mercateo.eventstore.domain.EventMetadata;
 import com.mercateo.eventstore.domain.EventSchemaRef;
 import com.mercateo.eventstore.domain.EventStoreFailure;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.domain.EventVersion;
 import com.mercateo.eventstore.domain.ImmutableEventMetadata;
-
 import io.vavr.collection.List;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
-import lombok.val;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.springframework.stereotype.Component;
+
+import java.net.URI;
 
 @Component("eventMetadataMapper")
 @Slf4j
@@ -36,7 +35,8 @@ public class EventMetadataMapper {
             .eventType(streamMetadata.eventType())
             .eventNumber(streamMetadata.eventNumber())
             .eventId(EventId.of(serializableMetadata.eventId()))
-            .causality(mapCausality(serializableMetadata.causality()));
+            .causality(mapCausality(serializableMetadata.causality()))
+            .eventInitiator(Option.of(serializableMetadata.eventInitiator()).map(EventInitiator::of));
 
         if (serializableMetadata.version() == null) {
             return mapLegacyMetadata(serializableMetadata, builder);

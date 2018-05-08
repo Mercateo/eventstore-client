@@ -3,8 +3,17 @@ package com.mercateo.eventstore.writer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import java.util.UUID;
-
+import com.mercateo.common.UnitTest;
+import com.mercateo.eventstore.data.CausalityData;
+import com.mercateo.eventstore.data.EventInitiatorData;
+import com.mercateo.eventstore.data.SerializableMetadata;
+import com.mercateo.eventstore.domain.Causality;
+import com.mercateo.eventstore.domain.EventId;
+import com.mercateo.eventstore.domain.EventType;
+import com.mercateo.eventstore.example.SomethingHappened;
+import com.mercateo.eventstore.json.EventJsonMapper;
+import com.mercateo.eventstore.writer.example.TestData;
+import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -13,17 +22,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.json.JacksonTester;
 
-import com.mercateo.common.UnitTest;
-import com.mercateo.eventstore.data.CausalityData;
-import com.mercateo.eventstore.data.SerializableMetadata;
-import com.mercateo.eventstore.domain.Causality;
-import com.mercateo.eventstore.domain.EventId;
-import com.mercateo.eventstore.domain.EventType;
-import com.mercateo.eventstore.example.SomethingHappened;
-import com.mercateo.eventstore.json.EventJsonMapper;
-import com.mercateo.eventstore.writer.example.TestData;
-
-import lombok.val;
+import java.util.UUID;
 
 @Category(UnitTest.class)
 @RunWith(MockitoJUnitRunner.class)
@@ -118,5 +117,27 @@ public class EventMetaDataMapperTest {
     public void doesNotContainCausality() throws Exception {
         val result = uut.mapMetaData(EVENT, mapper);
         assertThat(result).doesNotContain("causality");
+    }
+
+    @Test
+    public void containsInitiator() throws Exception {
+
+        val event = SomethingHappened.builder().from(EVENT).eventInitiator(TestData.EVENT_INITIATOR).build();
+
+        val result = uut.mapMetaData(event, mapper);
+
+        assertThat(result).isNotEmpty();
+        assertThat(metadataJson.parse(result.get())).hasFieldOrPropertyWithValue("eventInitiator", EventInitiatorData.of(TestData.EVENT_INITIATOR));
+    }
+
+    @Test
+    public void containsInitiatorAndImpersonator() throws Exception {
+
+        val event = SomethingHappened.builder().from(EVENT).eventInitiator(TestData.EVENT_INITIATOR_WITH_IMPERSONATOR).build();
+
+        val result = uut.mapMetaData(event, mapper);
+
+        assertThat(result).isNotEmpty();
+        assertThat(metadataJson.parse(result.get())).hasFieldOrPropertyWithValue("eventInitiator", EventInitiatorData.of(TestData.EVENT_INITIATOR_WITH_IMPERSONATOR));
     }
 }

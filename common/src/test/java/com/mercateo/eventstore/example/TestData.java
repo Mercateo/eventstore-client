@@ -1,20 +1,22 @@
 package com.mercateo.eventstore.example;
 
-import java.time.Instant;
-import java.util.UUID;
-
-import org.json.JSONObject;
-
 import com.github.msemys.esjc.RecordedEvent;
 import com.github.msemys.esjc.ResolvedEvent;
 import com.github.msemys.esjc.proto.EventStoreClientMessages.EventRecord;
 import com.mercateo.eventstore.domain.Causality;
 import com.mercateo.eventstore.domain.EventId;
+import com.mercateo.eventstore.domain.EventInitiator;
 import com.mercateo.eventstore.domain.EventStoreFailure;
 import com.mercateo.eventstore.domain.EventStoreFailure.FailureType;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.domain.EventVersion;
 import com.mercateo.eventstore.domain.ImmutableEventStoreFailure;
+import com.mercateo.eventstore.domain.ImmutableReference;
+import com.mercateo.eventstore.domain.Reference;
+import org.json.JSONObject;
+
+import java.time.Instant;
+import java.util.UUID;
 
 public final class TestData {
     public static final String STREAM_NAME = "test-stream";
@@ -39,6 +41,26 @@ public final class TestData {
     public static final EventId EVENT_ID_3 = EventId.of(UUID.fromString("55555555-5555-5555-5555-555555555553"));
 
     public static final Instant TIMESTAMP = Instant.ofEpochSecond(0);
+
+    public static final Reference INITIATOR = ImmutableReference
+        .builder()
+        .id(UUID.fromString("11111111-1111-1111-1111-111111111111"))
+        .type("INITIATOR")
+        .build();
+
+    public static final Reference IMPERSONATOR = ImmutableReference
+        .builder()
+        .id(UUID.fromString("11111111-1111-1111-1111-111111111112"))
+        .type("IMPERSONATOR")
+        .build();
+
+    public static final EventInitiator EVENT_INITIATOR = EventInitiator.of(INITIATOR);
+
+    public static final EventInitiator EVENT_INITIATOR_WITH_IMPERSONATOR = EventInitiator
+        .builder()
+        .initiator(INITIATOR)
+        .setValueImpersonated(IMPERSONATOR)
+        .build();
 
     public static final SomethingHappened SOMETHING_HAPPENED = SomethingHappened
         .builder()
