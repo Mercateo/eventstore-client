@@ -23,7 +23,7 @@ public interface EventStoreFailure {
     Option<Object> dataTBD();
 
     enum FailureType {
-        UNKNOWN_EVENT_TYPE, NO_EVENTSTORE, INTERNAL_ERROR
+        UNKNOWN_EVENT_TYPE, NO_EVENTSTORE, NO_EVENTS, MULTIPLE_STREAMS, INTERNAL_ERROR
     }
 
 }

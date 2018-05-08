@@ -7,4 +7,6 @@ import io.vavr.control.Either;
 
 public interface EventWriter {
     <E extends Event> Either<EventStoreFailure, E> write(E event);
+
+    <E extends Iterable<? extends Event>> Either<EventStoreFailure, E> write(E event);
 }

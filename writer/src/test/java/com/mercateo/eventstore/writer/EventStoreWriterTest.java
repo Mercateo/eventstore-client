@@ -18,6 +18,8 @@ import com.mercateo.eventstore.writer.example.TestData;
 import io.vavr.control.Either;
 import lombok.val;
 
+import java.util.Collections;
+
 @Category(UnitTest.class)
 @RunWith(MockitoJUnitRunner.class)
 public class EventStoreWriterTest {
@@ -39,7 +41,7 @@ public class EventStoreWriterTest {
 
     @Test
     public void writesEventsSuccesfully() throws Exception {
-        when(eventMapper.toEventStoreEvent(domainEvent)).thenReturn(Either.right(eventStoreData));
+        when(eventMapper.toEventStoreEvent(Collections.singleton(domainEvent))).thenReturn(Either.right(eventStoreData));
         when(eventSender.send(eventStoreData)).thenReturn(Either.right(null));
         val savingResult = uut.write(domainEvent);
         assertThat(savingResult.get()).isEqualTo(domainEvent);
@@ -47,7 +49,7 @@ public class EventStoreWriterTest {
 
     @Test
     public void failsOnEventDataCreation() throws Exception {
-        when(eventMapper.toEventStoreEvent(domainEvent)).thenReturn(Either.left(TestData.INTERNAL_ERROR_FAILURE));
+        when(eventMapper.toEventStoreEvent(Collections.singleton(domainEvent))).thenReturn(Either.left(TestData.INTERNAL_ERROR_FAILURE));
         val result = uut.write(domainEvent);
         assertThat(result.getLeft()).isSameAs(TestData.INTERNAL_ERROR_FAILURE);
         verifyNoMoreInteractions(eventSender);
@@ -56,7 +58,7 @@ public class EventStoreWriterTest {
 
     @Test
     public void failsOnSave() throws Exception {
-        when(eventMapper.toEventStoreEvent(domainEvent)).thenReturn(Either.right(eventStoreData));
+        when(eventMapper.toEventStoreEvent(Collections.singleton(domainEvent))).thenReturn(Either.right(eventStoreData));
         when(eventSender.send(eventStoreData)).thenReturn(Either.left(TestData.INTERNAL_ERROR_FAILURE));
         val result = uut.write(domainEvent);
         assertThat(result.getLeft()).isSameAs(TestData.INTERNAL_ERROR_FAILURE);
