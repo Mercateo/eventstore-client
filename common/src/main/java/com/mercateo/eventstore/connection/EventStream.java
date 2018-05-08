@@ -39,7 +39,15 @@ public class EventStream {
         return eventStoreClient.appendToStream(eventStreamId.eventStreamName().value(), expectedVersion, eventData);
     }
 
+    public CompletableFuture<WriteResult> append(long expectedVersion, Iterable<EventData> eventData) {
+        return eventStoreClient.appendToStream(eventStreamId.eventStreamName().value(), expectedVersion, eventData);
+    }
+
     public CompletableFuture<WriteResult> append(EventData eventData) {
+        return append(ANY, eventData);
+    }
+
+    public CompletableFuture<WriteResult> append(Iterable<EventData> eventData) {
         return append(ANY, eventData);
     }
 

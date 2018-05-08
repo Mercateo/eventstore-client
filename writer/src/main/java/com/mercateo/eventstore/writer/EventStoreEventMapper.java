@@ -57,8 +57,10 @@ public class EventStoreEventMapper {
             .toEither(INTERNAL_FAILURE)
             .flatMap(this::getMapper)
             .flatMap(mapper -> mapEvent(event, mapper))
-            .peek(data -> log.info("toEventStoreEvent() {} - {}", new String(data.eventData().data, Charset.forName(
-                    "utf8")), new String(data.eventData().metadata, Charset.forName("utf8"))));
+            .peek(data -> data
+                .eventData() //
+                .forEach(eventData -> log.info("toEventStoreEvent() {} - {}", new String(eventData.data, Charset
+                    .forName("utf8")), new String(eventData.metadata, Charset.forName("utf8")))));
     }
 
     @SuppressWarnings("rawtypes")
