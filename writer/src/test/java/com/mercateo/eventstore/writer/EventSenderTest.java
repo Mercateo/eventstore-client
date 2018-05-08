@@ -3,6 +3,7 @@ package com.mercateo.eventstore.writer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 
 import org.junit.Before;
@@ -56,7 +57,7 @@ public class EventSenderTest {
 
         WriteResult writeResult = new WriteResult(0, null);
         CompletableFuture<WriteResult> value = CompletableFuture.completedFuture(writeResult);
-        when(eventStream.append(event)).thenReturn(value);
+        when(eventStream.append(Collections.singleton(event))).thenReturn(value);
 
         Either<EventStoreFailure, Void> result = uut.send(writeEvent);
 
@@ -66,7 +67,7 @@ public class EventSenderTest {
     @Test
     public void shouldReturnFailureIfEventStreamThrows() {
 
-        when(eventStream.append(event)).thenThrow(new RuntimeException());
+        when(eventStream.append(Collections.singleton(event))).thenThrow(new RuntimeException());
 
         Either<EventStoreFailure, Void> result = uut.send(writeEvent);
 

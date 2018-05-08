@@ -4,7 +4,6 @@ import static com.github.msemys.esjc.ExpectedVersion.ANY;
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_STREAM_ID;
 import static com.mercateo.eventstore.writer.example.TestData.SOMETHING_HAPPENED;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,6 +16,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class EventStoreWriterComponentTest {
     private EventStore eventStore;
 
     @Captor
-    private ArgumentCaptor<EventData> argument = ArgumentCaptor.forClass(EventData.class);
+    private ArgumentCaptor<Iterable<EventData>> argument;
 
     private JacksonTester<SomethingHappenedData> dataJson;
 
@@ -90,15 +90,15 @@ public class EventStoreWriterComponentTest {
 
         when(eventstoreFactory.createEventStore(eventStoreProperties)).thenReturn(Either.right(eventStore));
 
-        when(eventStore.appendToStream(eq(eventStreamName.value()), eq(ANY), any(EventData.class))).thenReturn(
-                writeResult);
+        when(eventStore.appendToStream(eq(eventStreamName.value()), eq(ANY), ArgumentMatchers
+            .<Iterable<EventData>> any())).thenReturn(writeResult);
 
         val result = uut.write(SOMETHING_HAPPENED);
 
         assertThat(result.isRight()).isTrue();
 
         verify(eventStore).appendToStream(eq(eventStreamName.value()), eq(ANY), argument.capture());
-        EventData actualEvent = argument.getValue();
+        EventData actualEvent = argument.getValue().iterator().next();
 
         assertThat(actualEvent.type).isEqualTo("something-happened");
         assertThat(actualEvent.eventId).isEqualTo(SOMETHING_HAPPENED.eventId().value());
