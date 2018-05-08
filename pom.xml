@@ -4,7 +4,7 @@
 
     <groupId>com.mercateo.eventstore</groupId>
     <artifactId>parent</artifactId>
-    <version>0.2.24-SNAPSHOT</version>
+    <version>0.2.24</version>
     <packaging>pom</packaging>
 
     <name>eventstore-parent</name>
@@ -64,7 +64,7 @@
 
     <scm>
         <connection>scm:git:git@github.com:Mercateo/eventstore-client.git</connection>
-        <tag>HEAD</tag>
+        <tag>parent-0.2.24</tag>
         <url>https://github.com/Mercateo/eventstore-client</url>
     </scm>
 
