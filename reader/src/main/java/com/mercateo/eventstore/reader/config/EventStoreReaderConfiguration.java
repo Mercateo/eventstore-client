@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Import;
 
 import com.mercateo.eventstore.config.EventStoreConfiguration;
 import com.mercateo.eventstore.reader.EventListeners;
-import com.mercateo.eventstore.reader.EventSubscriptionHealthIndicator;
 import com.mercateo.eventstore.reader.EventMetadataMapper;
+import com.mercateo.eventstore.reader.EventSubscriptionHealthIndicator;
 
 @Configuration
 @Import({ EventStoreConfiguration.class, EventListeners.class, EventMetadataMapper.class,

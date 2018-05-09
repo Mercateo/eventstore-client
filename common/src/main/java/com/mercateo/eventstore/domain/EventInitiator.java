@@ -1,11 +1,13 @@
 package com.mercateo.eventstore.domain;
 
-import com.mercateo.eventstore.data.EventInitiatorData;
-import com.mercateo.immutables.DataClass;
-import io.vavr.control.Option;
+import javax.validation.constraints.NotNull;
+
 import org.immutables.value.Value;
 
-import javax.validation.constraints.NotNull;
+import com.mercateo.eventstore.data.EventInitiatorData;
+import com.mercateo.immutables.DataClass;
+
+import io.vavr.control.Option;
 
 @Value.Immutable
 @DataClass
@@ -23,10 +25,10 @@ public interface EventInitiator {
     @NotNull
     static EventInitiator of(EventInitiatorData eventInitiatorData) {
         return EventInitiator
-                .builder()
-                .initiator(Reference.of(eventInitiatorData.initiator()))
-                .impersonated(Option.of(eventInitiatorData.impersonated()).map(Reference::of))
-                .build();
+            .builder()
+            .initiator(Reference.of(eventInitiatorData.initiator()))
+            .impersonated(Option.of(eventInitiatorData.impersonated()).map(Reference::of))
+            .build();
     }
 
     @NotNull

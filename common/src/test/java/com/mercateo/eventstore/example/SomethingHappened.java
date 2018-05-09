@@ -1,5 +1,9 @@
 package com.mercateo.eventstore.example;
 
+import java.net.URI;
+
+import org.immutables.value.Value;
+
 import com.mercateo.eventstore.domain.Event;
 import com.mercateo.eventstore.domain.EventSchemaRef;
 import com.mercateo.eventstore.domain.EventStoreName;
@@ -8,9 +12,6 @@ import com.mercateo.eventstore.domain.EventStreamName;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.domain.EventVersion;
 import com.mercateo.immutables.DataClass;
-import org.immutables.value.Value;
-
-import java.net.URI;
 
 @Value.Immutable
 @DataClass

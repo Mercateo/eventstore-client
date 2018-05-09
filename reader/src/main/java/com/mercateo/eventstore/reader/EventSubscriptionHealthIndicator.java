@@ -34,7 +34,7 @@ public class EventSubscriptionHealthIndicator extends AbstractHealthIndicator {
     }
 
     public boolean isHealty() {
-        return activeMetrics.stream().allMatch(metrics -> (metrics.getStreamState().getState() == LIVE ));
+        return activeMetrics.stream().allMatch(metrics -> (metrics.getStreamState().getState() == LIVE));
     }
 
     private String unhealthySubscriptions() {

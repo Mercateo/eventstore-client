@@ -16,10 +16,15 @@ public class EventStatisticsCollector {
     private final EventStreamState state;
 
     private final Option<EventMetrics> client;
+
     private final EventStreamId eventStreamId;
+
     private long startTime = System.currentTimeMillis();
+
     private AtomicLong eventCount = new AtomicLong();
+
     private AtomicLong totalSize = new AtomicLong();
+
     private boolean inInitialReplay = true;
 
     public EventStatisticsCollector(EventStream eventStream, Option<EventMetrics> client) {

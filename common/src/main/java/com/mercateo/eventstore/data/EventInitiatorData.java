@@ -11,10 +11,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mercateo.eventstore.domain.EventInitiator;
 import com.mercateo.immutables.DataClass;
-import org.immutables.value.Value;
-
-import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 
 @Value.Immutable
 @DataClass

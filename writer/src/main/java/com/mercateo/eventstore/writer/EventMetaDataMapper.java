@@ -1,16 +1,18 @@
 package com.mercateo.eventstore.writer;
 
+import org.springframework.stereotype.Component;
+
 import com.mercateo.eventstore.data.CausalityData;
 import com.mercateo.eventstore.data.EventInitiatorData;
 import com.mercateo.eventstore.data.SerializableMetadata;
 import com.mercateo.eventstore.domain.Event;
 import com.mercateo.eventstore.domain.EventStoreFailure;
 import com.mercateo.eventstore.json.EventJsonMapper;
+
 import io.vavr.Function2;
 import io.vavr.control.Either;
 import lombok.AllArgsConstructor;
 import lombok.val;
-import org.springframework.stereotype.Component;
 
 @Component("eventMetaDataMapper")
 @AllArgsConstructor

@@ -1,5 +1,10 @@
 package com.mercateo.eventstore.example;
 
+import java.time.Instant;
+import java.util.UUID;
+
+import org.json.JSONObject;
+
 import com.github.msemys.esjc.RecordedEvent;
 import com.github.msemys.esjc.ResolvedEvent;
 import com.github.msemys.esjc.proto.EventStoreClientMessages.EventRecord;
@@ -13,10 +18,6 @@ import com.mercateo.eventstore.domain.EventVersion;
 import com.mercateo.eventstore.domain.ImmutableEventStoreFailure;
 import com.mercateo.eventstore.domain.ImmutableReference;
 import com.mercateo.eventstore.domain.Reference;
-import org.json.JSONObject;
-
-import java.time.Instant;
-import java.util.UUID;
 
 public final class TestData {
     public static final String STREAM_NAME = "test-stream";

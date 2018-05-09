@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.UUID;
 
-import com.mercateo.eventstore.domain.EventInitiator;
-import com.mercateo.eventstore.domain.Reference;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -13,7 +11,9 @@ import org.junit.experimental.categories.Category;
 import com.mercateo.common.UnitTest;
 import com.mercateo.eventstore.domain.Causality;
 import com.mercateo.eventstore.domain.EventId;
+import com.mercateo.eventstore.domain.EventInitiator;
 import com.mercateo.eventstore.domain.EventType;
+import com.mercateo.eventstore.domain.Reference;
 import com.mercateo.eventstore.json.EventJsonMapper;
 
 import lombok.val;
@@ -75,10 +75,9 @@ public class SerializableMetadataTest {
         final String initiatorType = "INITIATOR";
         final UUID impersonatorId = UUID.randomUUID();
         final String impersonatorType = "IMPERSONATOR";
-        val jsonString = "{\"eventId\":\"" + UUID.randomUUID() + "\", " +
-                "\"eventInitiator\": {" +
-                "\"initiator\": {\"id\":\"" + initiatorId + "\", \"type\":\"" + initiatorType + "\"}," +
-                "\"impersonated\": {\"id\":\"" + impersonatorId + "\", \"type\":\"" + impersonatorType + "\"}}}";
+        val jsonString = "{\"eventId\":\"" + UUID.randomUUID() + "\", " + "\"eventInitiator\": {"
+                + "\"initiator\": {\"id\":\"" + initiatorId + "\", \"type\":\"" + initiatorType + "\"},"
+                + "\"impersonated\": {\"id\":\"" + impersonatorId + "\", \"type\":\"" + impersonatorType + "\"}}}";
 
         val result = eventJsonMapper.readValue(jsonString.getBytes(), SerializableMetadata.class).get();
 

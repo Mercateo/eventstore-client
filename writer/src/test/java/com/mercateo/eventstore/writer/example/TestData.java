@@ -4,17 +4,17 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.UUID;
 
-import com.mercateo.eventstore.domain.EventInitiator;
-import com.mercateo.eventstore.domain.ImmutableReference;
-import com.mercateo.eventstore.domain.Reference;
 import org.json.JSONObject;
 
 import com.mercateo.eventstore.domain.Causality;
 import com.mercateo.eventstore.domain.EventId;
+import com.mercateo.eventstore.domain.EventInitiator;
 import com.mercateo.eventstore.domain.EventSchemaRef;
 import com.mercateo.eventstore.domain.EventStoreFailure;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.domain.EventVersion;
+import com.mercateo.eventstore.domain.ImmutableReference;
+import com.mercateo.eventstore.domain.Reference;
 import com.mercateo.eventstore.example.SomethingHappened;
 
 public final class TestData {
