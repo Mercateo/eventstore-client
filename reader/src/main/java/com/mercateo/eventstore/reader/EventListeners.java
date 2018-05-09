@@ -40,8 +40,8 @@ public class EventListeners {
 
     public EventListeners(
             @SuppressWarnings("rawtypes") Optional<java.util.List<EventConsumer<?>>> recordedEventDataHandlers,
-            Optional<EventMetrics> metricsClient, @Qualifier("eventStores") EventStores eventStores, EventMetadataMapper eventMetadataMapper,
-            @Qualifier("eventJsonMapper") EventJsonMapper eventJsonMapper,
+            Optional<EventMetrics> metricsClient, @Qualifier("eventStores") EventStores eventStores,
+            EventMetadataMapper eventMetadataMapper, @Qualifier("eventJsonMapper") EventJsonMapper eventJsonMapper,
             @Qualifier("eventSubscriptionHealthIndicator") EventSubscriptionHealthIndicator healthIndicator) {
         this.metricsClient = metricsClient.map(Option::some).orElse(Option.none());
         this.eventStores = eventStores;

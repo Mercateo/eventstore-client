@@ -68,8 +68,8 @@ public class EventHandlerTest {
                 SerializableMetadata.class)).thenReturn(Either.right(metadata));
         EventMetadata eventMetadata = mock(EventMetadata.class);
 
-        when(eventMetadataMapper.mapMetadata(StreamMetadata.of(EVENT_STREAM_ID, EventNumber.of(1L), EVENT_TYPE), metadata))
-            .thenReturn(Either.right(eventMetadata));
+        when(eventMetadataMapper.mapMetadata(StreamMetadata.of(EVENT_STREAM_ID, EventNumber.of(1L), EVENT_TYPE),
+                metadata)).thenReturn(Either.right(eventMetadata));
 
         uut.onEvent(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT);
 
@@ -107,8 +107,8 @@ public class EventHandlerTest {
         when(eventJsonMapper.readValue(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT.event.metadata,
                 SerializableMetadata.class)).thenReturn(Either.right(metadata));
         EventMetadata eventMetadata = mock(EventMetadata.class);
-        when(eventMetadataMapper.mapMetadata(StreamMetadata.of(EVENT_STREAM_ID, EventNumber.of(1L), EVENT_TYPE), metadata))
-            .thenReturn(Either.right(eventMetadata));
+        when(eventMetadataMapper.mapMetadata(StreamMetadata.of(EVENT_STREAM_ID, EventNumber.of(1L), EVENT_TYPE),
+                metadata)).thenReturn(Either.right(eventMetadata));
 
         doThrow(new RuntimeException()).when(eventConsumer).onEvent(data, eventMetadata);
 

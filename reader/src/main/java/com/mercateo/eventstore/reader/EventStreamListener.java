@@ -101,5 +101,4 @@ public class EventStreamListener implements CatchUpSubscriptionListener {
         return eventHandler.consumerCountFor(clazz);
     }
 
-
 }

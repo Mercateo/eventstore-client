@@ -15,6 +15,7 @@ import org.springframework.boot.test.json.JacksonTester;
 
 import com.mercateo.common.UnitTest;
 import com.mercateo.eventstore.data.CausalityData;
+import com.mercateo.eventstore.data.EventInitiatorData;
 import com.mercateo.eventstore.data.SerializableMetadata;
 import com.mercateo.eventstore.domain.Causality;
 import com.mercateo.eventstore.domain.EventId;
@@ -118,5 +119,33 @@ public class EventMetaDataMapperTest {
     public void doesNotContainCausality() throws Exception {
         val result = uut.mapMetaData(EVENT, mapper);
         assertThat(result).doesNotContain("causality");
+    }
+
+    @Test
+    public void containsInitiator() throws Exception {
+
+        val event = SomethingHappened.builder().from(EVENT).eventInitiator(TestData.EVENT_INITIATOR).build();
+
+        val result = uut.mapMetaData(event, mapper);
+
+        assertThat(result).isNotEmpty();
+        assertThat(metadataJson.parse(result.get())).hasFieldOrPropertyWithValue("eventInitiator", EventInitiatorData
+            .of(TestData.EVENT_INITIATOR));
+    }
+
+    @Test
+    public void containsInitiatorAndImpersonator() throws Exception {
+
+        val event = SomethingHappened
+            .builder()
+            .from(EVENT)
+            .eventInitiator(TestData.EVENT_INITIATOR_WITH_IMPERSONATOR)
+            .build();
+
+        val result = uut.mapMetaData(event, mapper);
+
+        assertThat(result).isNotEmpty();
+        assertThat(metadataJson.parse(result.get())).hasFieldOrPropertyWithValue("eventInitiator", EventInitiatorData
+            .of(TestData.EVENT_INITIATOR_WITH_IMPERSONATOR));
     }
 }

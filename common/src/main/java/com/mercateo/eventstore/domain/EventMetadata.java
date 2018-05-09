@@ -28,4 +28,6 @@ public interface EventMetadata {
     EventVersion version();
 
     List<Causality> causality();
+
+    Option<EventInitiator> eventInitiator();
 }

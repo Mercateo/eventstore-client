@@ -8,6 +8,7 @@ import com.mercateo.eventstore.data.CausalityData;
 import com.mercateo.eventstore.data.SerializableMetadata;
 import com.mercateo.eventstore.domain.Causality;
 import com.mercateo.eventstore.domain.EventId;
+import com.mercateo.eventstore.domain.EventInitiator;
 import com.mercateo.eventstore.domain.EventMetadata;
 import com.mercateo.eventstore.domain.EventSchemaRef;
 import com.mercateo.eventstore.domain.EventStoreFailure;
@@ -36,7 +37,8 @@ public class EventMetadataMapper {
             .eventType(streamMetadata.eventType())
             .eventNumber(streamMetadata.eventNumber())
             .eventId(EventId.of(serializableMetadata.eventId()))
-            .causality(mapCausality(serializableMetadata.causality()));
+            .causality(mapCausality(serializableMetadata.causality()))
+            .eventInitiator(Option.of(serializableMetadata.eventInitiator()).map(EventInitiator::of));
 
         if (serializableMetadata.version() == null) {
             return mapLegacyMetadata(serializableMetadata, builder);
