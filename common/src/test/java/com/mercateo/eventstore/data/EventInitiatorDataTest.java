@@ -18,19 +18,18 @@ public class EventInitiatorDataTest {
 
         val result = EventInitiatorData.of(TestData.EVENT_INITIATOR);
 
-        assertThat(result.initiator()).isEqualTo(ReferenceData.of(TestData.EVENT_INITIATOR.initiator()));
-        assertThat(result.impersonated()).isEqualTo(null);
+        assertThat(result.id()).isEqualTo(TestData.EVENT_INITIATOR.id());
+        assertThat(result.type()).isEqualTo(TestData.EVENT_INITIATOR.type());
+        assertThat(result.agent()).isEmpty();
     }
 
     @Test
     public void buildsEventInitiatorDataWithImpersonator() throws Exception {
 
-        val result = EventInitiatorData.of(TestData.EVENT_INITIATOR_WITH_IMPERSONATOR);
+        val result = EventInitiatorData.of(TestData.EVENT_INITIATOR_WITH_AGENT);
 
-        assertThat(result.initiator()).isEqualTo(ReferenceData.of(TestData.EVENT_INITIATOR_WITH_IMPERSONATOR
-            .initiator()));
-        assertThat(result.impersonated()).isEqualTo(ReferenceData.of(TestData.EVENT_INITIATOR_WITH_IMPERSONATOR
-            .impersonated()
-            .get()));
+        assertThat(result.id()).isEqualTo(TestData.EVENT_INITIATOR.id());
+        assertThat(result.type()).isEqualTo(TestData.EVENT_INITIATOR.type());
+        assertThat(result.agent()).contains(ReferenceData.of(TestData.IMPERSONATOR));
     }
 }

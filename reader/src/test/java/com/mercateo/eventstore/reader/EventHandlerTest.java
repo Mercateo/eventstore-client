@@ -2,6 +2,7 @@ package com.mercateo.eventstore.reader;
 
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_STREAM_ID;
 import static com.mercateo.eventstore.example.SomethingHappened.EVENT_TYPE;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -112,6 +113,10 @@ public class EventHandlerTest {
 
         doThrow(new RuntimeException()).when(eventConsumer).onEvent(data, eventMetadata);
 
-        uut.onEvent(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT);
+        try {
+            uut.onEvent(TestData.EVENT_STORE_RESOLVED_LEGACY_SOMETHING_HAPPENED_EVENT);
+        } catch (Exception e) {
+            fail();
+        }
     }
 }

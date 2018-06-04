@@ -15,7 +15,8 @@
  */
 package com.mercateo.eventstore.data;
 
-import javax.annotation.Nullable;
+import java.util.UUID;
+
 import javax.validation.constraints.NotNull;
 
 import org.immutables.value.Value;
@@ -25,26 +26,35 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mercateo.eventstore.domain.EventInitiator;
+import com.mercateo.eventstore.domain.Reference;
 import com.mercateo.immutables.DataClass;
+
+import io.vavr.control.Option;
 
 @Value.Immutable
 @DataClass
 @JsonSerialize(as = ImmutableEventInitiatorData.class)
 @JsonDeserialize(as = ImmutableEventInitiatorData.class)
 @JsonInclude(Include.NON_NULL)
-public interface EventInitiatorData {
+public interface EventInitiatorData extends Reference {
 
     static EventInitiatorData of(EventInitiator eventInitiator) {
         return ImmutableEventInitiatorData
             .builder()
-            .initiator(ReferenceData.of(eventInitiator.initiator()))
-            .impersonated(eventInitiator.impersonated().map(ReferenceData::of).getOrNull())
+            .id(eventInitiator.id())
+            .type(eventInitiator.type())
+            .agent(eventInitiator.agent().map(ReferenceData::of))
             .build();
     }
 
     @NotNull
-    ReferenceData initiator();
+    @Override
+    UUID id();
 
-    @Nullable
-    ReferenceData impersonated();
+    @NotNull
+    @Override
+    String type();
+
+    @NotNull
+    Option<ReferenceData> agent();
 }

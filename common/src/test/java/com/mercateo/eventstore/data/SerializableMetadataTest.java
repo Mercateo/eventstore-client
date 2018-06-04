@@ -13,7 +13,6 @@ import com.mercateo.eventstore.domain.Causality;
 import com.mercateo.eventstore.domain.EventId;
 import com.mercateo.eventstore.domain.EventInitiator;
 import com.mercateo.eventstore.domain.EventType;
-import com.mercateo.eventstore.domain.Reference;
 import com.mercateo.eventstore.json.EventJsonMapper;
 
 import lombok.val;
@@ -75,9 +74,9 @@ public class SerializableMetadataTest {
         final String initiatorType = "INITIATOR";
         final UUID impersonatorId = UUID.randomUUID();
         final String impersonatorType = "IMPERSONATOR";
-        val jsonString = "{\"eventId\":\"" + UUID.randomUUID() + "\", " + "\"eventInitiator\": {"
-                + "\"initiator\": {\"id\":\"" + initiatorId + "\", \"type\":\"" + initiatorType + "\"},"
-                + "\"impersonated\": {\"id\":\"" + impersonatorId + "\", \"type\":\"" + impersonatorType + "\"}}}";
+        val jsonString = "{\"eventId\":\"" + UUID.randomUUID() + "\", " + "\"eventInitiator\": {" + "\"id\":\""
+                + initiatorId + "\", \"type\":\"" + initiatorType + "\" ," + "\"agent\": {\"id\":\"" + impersonatorId
+                + "\", \"type\":\"" + impersonatorType + "\"}}}";
 
         val result = eventJsonMapper.readValue(jsonString.getBytes(), SerializableMetadata.class).get();
 
@@ -85,8 +84,9 @@ public class SerializableMetadataTest {
 
         assertThat(result.eventInitiator()).isEqualTo(EventInitiatorData.of(EventInitiator
             .builder()
-            .initiator(Reference.builder().id(initiatorId).type(initiatorType).build())
-            .setValueImpersonated(Reference.builder().id(impersonatorId).type(impersonatorType).build())
+            .id(initiatorId)
+            .type(initiatorType)
+            .setValueAgent(ReferenceData.of(EventInitiator.builder().id(impersonatorId).type(impersonatorType).build()))
             .build()));
     }
 }
