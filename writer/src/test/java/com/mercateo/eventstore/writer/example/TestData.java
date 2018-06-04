@@ -13,7 +13,6 @@ import com.mercateo.eventstore.domain.EventSchemaRef;
 import com.mercateo.eventstore.domain.EventStoreFailure;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.domain.EventVersion;
-import com.mercateo.eventstore.domain.ImmutableReference;
 import com.mercateo.eventstore.domain.Reference;
 import com.mercateo.eventstore.example.SomethingHappened;
 
@@ -43,13 +42,13 @@ public final class TestData {
 
     public static final Instant TIMESTAMP = Instant.ofEpochSecond(0);
 
-    public static final Reference INITIATOR = ImmutableReference
+    public static final Reference INITIATOR = EventInitiator
         .builder()
         .id(UUID.fromString("11111111-1111-1111-1111-111111111111"))
         .type("INITIATOR")
         .build();
 
-    public static final Reference IMPERSONATOR = ImmutableReference
+    public static final Reference IMPERSONATOR = EventInitiator
         .builder()
         .id(UUID.fromString("11111111-1111-1111-1111-111111111112"))
         .type("IMPERSONATOR")
@@ -59,8 +58,8 @@ public final class TestData {
 
     public static final EventInitiator EVENT_INITIATOR_WITH_IMPERSONATOR = EventInitiator
         .builder()
-        .initiator(INITIATOR)
-        .setValueImpersonated(IMPERSONATOR)
+            .from(INITIATOR)
+        //.setValueImpersonated(IMPERSONATOR)
         .build();
 
     public static final SomethingHappened SOMETHING_HAPPENED = SomethingHappened

@@ -30,16 +30,17 @@ import com.mercateo.immutables.DataClass;
 @DataClass
 @JsonSerialize(as = ImmutableReferenceData.class)
 @JsonDeserialize(as = ImmutableReferenceData.class)
-public interface ReferenceData {
+public interface ReferenceData extends Reference {
 
     static ReferenceData of(Reference reference) {
         return ImmutableReferenceData.builder().id(reference.id()).type(reference.type()).build();
     }
 
     @NotNull
+    @Override
     UUID id();
 
     @NotNull
+    @Override
     String type();
-
 }

@@ -15,7 +15,6 @@
  */
 package com.mercateo.eventstore.writer;
 
-import static com.mercateo.eventstore.domain.EventStoreFailure.FailureType.INTERNAL_ERROR;
 import static com.mercateo.eventstore.domain.EventStoreFailure.FailureType.MULTIPLE_STREAMS;
 import static com.mercateo.eventstore.domain.EventStoreFailure.FailureType.NO_EVENTS;
 import static com.mercateo.eventstore.domain.EventStoreFailure.FailureType.UNKNOWN_EVENT_TYPE;
@@ -44,8 +43,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class EventStoreEventMapper {
-
-    private static final EventStoreFailure INTERNAL_FAILURE = EventStoreFailure.builder().type(INTERNAL_ERROR).build();
 
     private static final EventStoreFailure UNKNOWN_EVENT_TYPE_FAILURE = EventStoreFailure
         .builder()

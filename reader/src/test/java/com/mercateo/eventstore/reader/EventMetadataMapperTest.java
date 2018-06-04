@@ -15,6 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.mercateo.common.UnitTest;
 import com.mercateo.eventstore.data.CausalityData;
 import com.mercateo.eventstore.data.EventInitiatorData;
+import com.mercateo.eventstore.data.ReferenceData;
 import com.mercateo.eventstore.data.SerializableMetadata;
 import com.mercateo.eventstore.domain.Causality;
 import com.mercateo.eventstore.domain.EventId;
@@ -127,7 +128,7 @@ public class EventMetadataMapperTest {
 
     @Test
     public void mapsEventInitiator() {
-        val eventInitiator = EventInitiator.builder().initiator(TestData.INITIATOR).build();
+        val eventInitiator = EventInitiator.builder().from(TestData.INITIATOR).build();
 
         val serializableMetadata = SerializableMetadata
             .builder()
@@ -147,8 +148,8 @@ public class EventMetadataMapperTest {
     public void mapsEventInitiatorWithImposter() {
         val eventInitiatorWithImposter = EventInitiator
             .builder()
-            .initiator(TestData.INITIATOR)
-            .setValueImpersonated(TestData.IMPERSONATOR)
+            .from(TestData.INITIATOR)
+            .setValueAgent(ReferenceData.of(TestData.IMPERSONATOR))
             .build();
 
         val serializableMetadata = SerializableMetadata

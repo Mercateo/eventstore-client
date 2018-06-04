@@ -3,6 +3,7 @@ package com.mercateo.eventstore.example;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.mercateo.eventstore.data.ReferenceData;
 import org.json.JSONObject;
 
 import com.github.msemys.esjc.RecordedEvent;
@@ -16,7 +17,6 @@ import com.mercateo.eventstore.domain.EventStoreFailure.FailureType;
 import com.mercateo.eventstore.domain.EventType;
 import com.mercateo.eventstore.domain.EventVersion;
 import com.mercateo.eventstore.domain.ImmutableEventStoreFailure;
-import com.mercateo.eventstore.domain.ImmutableReference;
 import com.mercateo.eventstore.domain.Reference;
 
 public final class TestData {
@@ -43,13 +43,13 @@ public final class TestData {
 
     public static final Instant TIMESTAMP = Instant.ofEpochSecond(0);
 
-    public static final Reference INITIATOR = ImmutableReference
+    public static final Reference INITIATOR = EventInitiator
         .builder()
         .id(UUID.fromString("11111111-1111-1111-1111-111111111111"))
         .type("INITIATOR")
         .build();
 
-    public static final Reference IMPERSONATOR = ImmutableReference
+    public static final Reference IMPERSONATOR = EventInitiator
         .builder()
         .id(UUID.fromString("11111111-1111-1111-1111-111111111112"))
         .type("IMPERSONATOR")
@@ -57,10 +57,10 @@ public final class TestData {
 
     public static final EventInitiator EVENT_INITIATOR = EventInitiator.of(INITIATOR);
 
-    public static final EventInitiator EVENT_INITIATOR_WITH_IMPERSONATOR = EventInitiator
+    public static final EventInitiator EVENT_INITIATOR_WITH_AGENT = EventInitiator
         .builder()
-        .initiator(INITIATOR)
-        .setValueImpersonated(IMPERSONATOR)
+        .from(INITIATOR)
+        .setValueAgent(ReferenceData.of(IMPERSONATOR))
         .build();
 
     public static final SomethingHappened SOMETHING_HAPPENED = SomethingHappened
