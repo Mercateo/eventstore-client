@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -10,7 +11,7 @@
 
     <groupId>com.mercateo.eventstore</groupId>
     <artifactId>parent</artifactId>
-    <version>0.2.26-SNAPSHOT</version>
+    <version>0.2.26</version>
     <packaging>pom</packaging>
 
     <name>eventstore-parent</name>
@@ -31,17 +32,17 @@
     </licenses>
 
     <developers>
-    <developer>
-        <id>andreas_wuerl</id>
-        <name>Andreas Würl</name>
-        <email>andreas.wuerl@mercateo.com</email>
-        <url>http://www.mercateo.com</url>
-        <organization>Mercateo AG</organization>
-        <organizationUrl>http://www.mercateo.com</organizationUrl>
-        <roles>
-            <role>developer</role>
-        </roles>
-    </developer>
+        <developer>
+            <id>andreas_wuerl</id>
+            <name>Andreas Würl</name>
+            <email>andreas.wuerl@mercateo.com</email>
+            <url>http://www.mercateo.com</url>
+            <organization>Mercateo AG</organization>
+            <organizationUrl>http://www.mercateo.com</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
     </developers>
 
     <properties>
@@ -252,6 +253,13 @@
                     <excludes>
                         <exclude>**/Immutable*.*</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>
