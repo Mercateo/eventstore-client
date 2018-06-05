@@ -257,7 +257,7 @@
             </plugin>
             <plugin>
                 <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-plugin</artifactId>
+                <artifactId>dependency-check-maven</artifactId>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
