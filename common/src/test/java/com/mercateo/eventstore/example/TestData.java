@@ -60,7 +60,7 @@ public final class TestData {
     public static final EventInitiator EVENT_INITIATOR_WITH_AGENT = EventInitiator
         .builder()
         .from(INITIATOR)
-        .setValueAgent(ReferenceData.of(IMPERSONATOR))
+        .agent(ReferenceData.of(IMPERSONATOR))
         .build();
 
     public static final SomethingHappened SOMETHING_HAPPENED = SomethingHappened

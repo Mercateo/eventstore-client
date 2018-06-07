@@ -1,5 +1,7 @@
 package com.mercateo.eventstore.example;
 
+import com.mercateo.eventstore.domain.EventInitiator;
+import com.mercateo.eventstore.domain.Reference;
 import org.json.JSONObject;
 
 import com.github.msemys.esjc.ResolvedEvent;
@@ -9,6 +11,8 @@ import com.google.protobuf.ByteString;
 import com.mercateo.eventstore.domain.Event;
 
 public class TestEventBuilder {
+
+    private JSONObject initiator;
 
     public static ResolvedEvent buildResolvedEventV1(String streamName, Event event, String eventType,
             JSONObject eventData) {
@@ -66,12 +70,26 @@ public class TestEventBuilder {
     }
 
     public static String createMetaData(Event event) {
+
+        JSONObject initiator = event
+            .eventInitiator()
+            .map(eventInitiator -> createReferenceJson(eventInitiator).put("agent", eventInitiator
+                .agent()
+                .map(TestEventBuilder::createReferenceJson)
+                .orElse(null)))
+            .orElse(null);
+
         return new JSONObject()
             .put("eventId", event.eventId().value())
             .put("schemaRef", "https://awesomeschema.org/something-happened_1.json")
             .put("eventType", event.eventType().value())
             .put("version", 1)
+            .put("eventInitiator", initiator)
             .toString();
+    }
+
+    private static JSONObject createReferenceJson(Reference reference) {
+        return new JSONObject().put("id", reference.id()).put("type", reference.type());
     }
 
 }

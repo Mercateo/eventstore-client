@@ -86,7 +86,7 @@ public class SerializableMetadataTest {
             .builder()
             .id(initiatorId)
             .type(initiatorType)
-            .setValueAgent(ReferenceData.of(EventInitiator.builder().id(impersonatorId).type(impersonatorType).build()))
+            .agent(ReferenceData.of(EventInitiator.builder().id(impersonatorId).type(impersonatorType).build()))
             .build()));
     }
 }
