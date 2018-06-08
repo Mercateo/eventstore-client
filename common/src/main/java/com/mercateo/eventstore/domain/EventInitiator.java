@@ -15,6 +15,8 @@
  */
 package com.mercateo.eventstore.domain;
 
+import java.util.Optional;
+
 import javax.validation.constraints.NotNull;
 
 import org.immutables.value.Value;
@@ -22,8 +24,6 @@ import org.immutables.value.Value;
 import com.mercateo.eventstore.data.EventInitiatorData;
 import com.mercateo.eventstore.data.ReferenceData;
 import com.mercateo.immutables.DataClass;
-
-import io.vavr.control.Option;
 
 @Value.Immutable
 @DataClass
@@ -49,5 +49,5 @@ public interface EventInitiator extends Reference {
     }
 
     @NotNull
-    Option<ReferenceData> agent();
+    Optional<ReferenceData> agent();
 }

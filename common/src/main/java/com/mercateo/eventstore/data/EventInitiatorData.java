@@ -15,6 +15,7 @@
  */
 package com.mercateo.eventstore.data;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
@@ -28,8 +29,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mercateo.eventstore.domain.EventInitiator;
 import com.mercateo.eventstore.domain.Reference;
 import com.mercateo.immutables.DataClass;
-
-import io.vavr.control.Option;
 
 @Value.Immutable
 @DataClass
@@ -56,5 +55,5 @@ public interface EventInitiatorData extends Reference {
     String type();
 
     @NotNull
-    Option<ReferenceData> agent();
+    Optional<ReferenceData> agent();
 }
