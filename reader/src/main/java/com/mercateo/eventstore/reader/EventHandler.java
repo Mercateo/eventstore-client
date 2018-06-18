@@ -58,7 +58,7 @@ class EventHandler {
     public void onEvent(ResolvedEvent event) {
         val recordedEvent = event.event;
 
-        log.info("onEvent() {} - {}", new String(recordedEvent.data, Charset.forName("utf8")), new String(
+        log.debug("onEvent() {} - {}", new String(recordedEvent.data, Charset.forName("utf8")), new String(
                 recordedEvent.metadata, Charset.forName("utf8")));
 
         consumers
