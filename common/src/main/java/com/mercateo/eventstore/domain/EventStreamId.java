@@ -33,6 +33,6 @@ public abstract class EventStreamId {
 
     @Override
     public String toString() {
-        return "EventStreamId{" + eventStoreName() + "/" + eventStreamName() + "}";
+        return "EventStreamId{" + eventStoreName().value() + "/" + eventStreamName().value() + "}";
     }
 }
