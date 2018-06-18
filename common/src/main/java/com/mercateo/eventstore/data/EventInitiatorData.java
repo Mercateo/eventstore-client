@@ -20,6 +20,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -35,6 +36,7 @@ import com.mercateo.immutables.DataClass;
 @JsonSerialize(as = ImmutableEventInitiatorData.class)
 @JsonDeserialize(as = ImmutableEventInitiatorData.class)
 @JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public interface EventInitiatorData extends Reference {
 
     static EventInitiatorData of(EventInitiator eventInitiator) {
