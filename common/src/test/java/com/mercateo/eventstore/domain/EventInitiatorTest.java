@@ -2,6 +2,8 @@ package com.mercateo.eventstore.domain;
 
 import com.mercateo.common.UnitTest;
 import com.mercateo.eventstore.data.EventInitiatorData;
+import com.mercateo.eventstore.data.ImmutableEventInitiatorData;
+import com.mercateo.eventstore.data.ReferenceData;
 import com.mercateo.eventstore.example.TestData;
 import lombok.val;
 import org.junit.Test;
@@ -33,5 +35,17 @@ public class EventInitiatorTest {
         assertThat(initiator.id()).isEqualTo(initiatorData.id());
         assertThat(initiator.type()).isEqualTo(initiatorData.type());
         assertThat(initiator.agent()).contains(initiatorData.agent().get());
+    }
+
+    @Test
+    public void mapsLegacyInitiatorData() {
+        final ReferenceData of = ReferenceData.of(TestData.INITIATOR);
+        val initiatorData = ImmutableEventInitiatorData.builder().initiator(of).build();
+
+        val initiator = EventInitiator.of(initiatorData);
+
+        assertThat(initiator.id()).isEqualTo(initiatorData.id());
+        assertThat(initiator.type()).isEqualTo(initiatorData.type());
+        assertThat(initiator.agent()).isEmpty();
     }
 }
