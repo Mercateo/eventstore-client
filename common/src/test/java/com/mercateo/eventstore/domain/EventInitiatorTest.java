@@ -1,15 +1,19 @@
 package com.mercateo.eventstore.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Optional;
+
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
 import com.mercateo.common.UnitTest;
 import com.mercateo.eventstore.data.EventInitiatorData;
 import com.mercateo.eventstore.data.ImmutableEventInitiatorData;
 import com.mercateo.eventstore.data.ReferenceData;
 import com.mercateo.eventstore.example.TestData;
-import lombok.val;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import lombok.val;
 
 @Category(UnitTest.class)
 public class EventInitiatorTest {
@@ -39,13 +43,17 @@ public class EventInitiatorTest {
 
     @Test
     public void mapsLegacyInitiatorData() {
-        final ReferenceData of = ReferenceData.of(TestData.INITIATOR);
-        val initiatorData = ImmutableEventInitiatorData.builder().initiator(of).build();
+        val initiator = TestData.INITIATOR;
+        val initiatorData = ImmutableEventInitiatorData
+            .builder()
+            .initiator(ReferenceData.of(initiator))
+            .agent(Optional.empty())
+            .build();
 
-        val initiator = EventInitiator.of(initiatorData);
+        val result = EventInitiator.of(initiatorData);
 
-        assertThat(initiator.id()).isEqualTo(initiatorData.id());
-        assertThat(initiator.type()).isEqualTo(initiatorData.type());
-        assertThat(initiator.agent()).isEmpty();
+        assertThat(result.id()).isEqualTo(initiator.id());
+        assertThat(result.type()).isEqualTo(initiator.type());
+        assertThat(result.agent()).isEmpty();
     }
 }
