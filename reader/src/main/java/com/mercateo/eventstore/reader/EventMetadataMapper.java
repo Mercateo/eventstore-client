@@ -53,13 +53,17 @@ public class EventMetadataMapper {
             .eventNumber(streamMetadata.eventNumber())
             .eventId(EventId.of(serializableMetadata.eventId()))
             .causality(mapCausality(serializableMetadata.causality()))
-            .eventInitiator(Option.of(serializableMetadata.eventInitiator()).map(EventInitiator::of));
+            .eventInitiator(mapInitiator(serializableMetadata));
 
         if (serializableMetadata.version() == null) {
             return mapLegacyMetadata(serializableMetadata, builder);
         } else {
             return mapMetadata(serializableMetadata, builder);
         }
+    }
+
+    private Option<EventInitiator> mapInitiator(SerializableMetadata serializableMetadata) {
+        return Option.of(serializableMetadata.eventInitiator()).map(EventInitiator::of);
     }
 
     private List<Causality> mapCausality(CausalityData[] causalityData) {

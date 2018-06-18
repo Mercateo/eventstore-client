@@ -89,4 +89,27 @@ public class SerializableMetadataTest {
             .agent(ReferenceData.of(EventInitiator.builder().id(impersonatorId).type(impersonatorType).build()))
             .build()));
     }
+
+    @Test
+    public void deserializesLegacyEventInitiator() {
+        final UUID initiatorId = UUID.randomUUID();
+        final String initiatorType = "INITIATOR";
+
+        val jsonString = "{ \"eventId\": \"e8b89e2f-54cb-4e1a-ab44-2927715fd1e1\", " +
+                "\"schemaRef\": \"https://event.store/test_event.json\", " +
+                "\"version\": 0, \"eventType\": \"test\", \"eventInitiator\": " +
+                "{ \"initiator\": { \"id\": \""+  initiatorId + "\", \"type\": \"" + initiatorType + "\" } } }";
+
+        val result = eventJsonMapper.readValue(jsonString.getBytes(), SerializableMetadata.class).get();
+
+        assertThat(result.eventInitiator()).isNotNull();
+        assertThat(result.eventInitiator().id()).isNull();
+        assertThat(result.eventInitiator().type()).isNull();
+        assertThat(result.eventInitiator().initiator()).isPresent();
+        final ReferenceData referenceData = result.eventInitiator().initiator().get();
+        assertThat(referenceData.id()).isEqualTo(initiatorId);
+        assertThat(referenceData.type()).isEqualTo(initiatorType);
+
+
+    }
 }

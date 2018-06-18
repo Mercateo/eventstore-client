@@ -18,6 +18,7 @@ package com.mercateo.eventstore.data;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -48,13 +49,16 @@ public interface EventInitiatorData extends Reference {
             .build();
     }
 
-    @NotNull
     @Override
+    @Nullable
     UUID id();
 
-    @NotNull
     @Override
+    @Nullable
     String type();
+
+    @NotNull
+    Optional<ReferenceData> initiator();
 
     @NotNull
     Optional<ReferenceData> agent();

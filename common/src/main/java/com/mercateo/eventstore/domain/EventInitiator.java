@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.val;
 import org.immutables.value.Value;
 
 import com.mercateo.eventstore.data.EventInitiatorData;
@@ -40,12 +41,9 @@ public interface EventInitiator extends Reference {
 
     @NotNull
     static EventInitiator of(EventInitiatorData eventInitiatorData) {
-        return EventInitiator
-            .builder()
-            .id(eventInitiatorData.id())
-            .type(eventInitiatorData.type())
-            .agent(eventInitiatorData.agent())
-            .build();
+        val referenceData = eventInitiatorData.initiator().orElse(ReferenceData.of(eventInitiatorData));
+
+        return EventInitiator.builder().from(referenceData).agent(eventInitiatorData.agent()).build();
     }
 
     @NotNull
