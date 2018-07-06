@@ -40,7 +40,7 @@ public class EventSubscriptionHealthIndicator extends AbstractHealthIndicator {
 
     @Override
     protected void doHealthCheck(Health.Builder builder) throws Exception {
-        if (isHealty()) {
+        if (isHealthy()) {
             builder.up();
         } else {
             log.warn("eventstore subscription not healthy on {}", unhealthySubscriptions());
@@ -48,8 +48,17 @@ public class EventSubscriptionHealthIndicator extends AbstractHealthIndicator {
         }
     }
 
-    public boolean isHealty() {
+    public boolean isHealthy() {
         return activeMetrics.stream().allMatch(metrics -> (metrics.getStreamState().getState() == LIVE));
+    }
+
+    /**
+     * @deprecated please use {{@link #isHealthy()}} instead
+     * @return
+     */
+    @Deprecated
+    public boolean isHealty() {
+        return isHealthy();
     }
 
     private String unhealthySubscriptions() {
