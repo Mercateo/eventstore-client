@@ -2,6 +2,7 @@ package com.mercateo.eventstore.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class EventInitiatorTest {
 
         assertThat(initiator.id()).isEqualTo(initiatorData.id());
         assertThat(initiator.type()).isEqualTo(initiatorData.type());
-        assertThat(initiator.agent()).contains(initiatorData.agent().get());
+        assertThat(initiator.agent()).contains(initiatorData.agent().get(0));
     }
 
     @Test
@@ -47,7 +48,6 @@ public class EventInitiatorTest {
         val initiatorData = ImmutableEventInitiatorData
             .builder()
             .initiator(ReferenceData.of(initiator))
-            .agent(Optional.empty())
             .build();
 
         val result = EventInitiator.of(initiatorData);

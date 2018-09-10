@@ -75,8 +75,8 @@ public class TestEventBuilder {
             .eventInitiator()
             .map(eventInitiator -> createReferenceJson(eventInitiator).put("agent", eventInitiator
                 .agent()
-                .map(TestEventBuilder::createReferenceJson)
-                .orElse(null)))
+                    .stream()
+                    .map(TestEventBuilder::createReferenceJson)))
             .orElse(null);
 
         return new JSONObject()

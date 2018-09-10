@@ -86,8 +86,35 @@ public class SerializableMetadataTest {
             .builder()
             .id(initiatorId)
             .type(initiatorType)
-            .agent(ReferenceData.of(EventInitiator.builder().id(impersonatorId).type(impersonatorType).build()))
+            .addAgent(ReferenceData.of(EventInitiator.builder().id(impersonatorId).type(impersonatorType).build()))
             .build()));
+    }
+
+    @Test
+    public void deserializesEventInitiatorWithAgentInformation() {
+        final UUID initiatorId = UUID.randomUUID();
+        final String initiatorType = "INITIATOR";
+        final UUID impersonatorId = UUID.randomUUID();
+        final UUID id2 = UUID.randomUUID();
+
+        final String impersonatorType = "IMPERSONATOR";
+        final String type2 = "BAR";
+        val jsonString = "{\"eventId\":\"" + UUID.randomUUID() + "\", " + "\"eventInitiator\": {" + "\"id\":\""
+                + initiatorId + "\", \"type\":\"" + initiatorType + "\" ," + "\"agent\": [{\"id\":\"" + impersonatorId
+                + "\", \"type\":\"" + impersonatorType + "\"},{\"id\":\"" + id2 +
+                "\", \"type\":\"" + type2 + "\"}]}}";
+
+        val result = eventJsonMapper.readValue(jsonString.getBytes(), SerializableMetadata.class).get();
+
+        System.out.println(result);
+
+        assertThat(result.eventInitiator()).isEqualTo(EventInitiatorData.of(EventInitiator
+                .builder()
+                .id(initiatorId)
+                .type(initiatorType)
+                .addAgent(ReferenceData.of(EventInitiator.builder().id(impersonatorId).type(impersonatorType).build()))
+                .addAgent(ReferenceData.of(EventInitiator.builder().id(id2).type(type2).build()))
+                .build()));
     }
 
     @Test

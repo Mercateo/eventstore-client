@@ -15,6 +15,7 @@
  */
 package com.mercateo.eventstore.data;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,7 +46,7 @@ public interface EventInitiatorData extends Reference {
             .builder()
             .id(eventInitiator.id())
             .type(eventInitiator.type())
-            .agent(eventInitiator.agent().map(ReferenceData::of))
+            .agent(eventInitiator.agent())
             .build();
     }
 
@@ -61,5 +62,5 @@ public interface EventInitiatorData extends Reference {
     Optional<ReferenceData> initiator();
 
     @NotNull
-    Optional<ReferenceData> agent();
+    List<ReferenceData> agent();
 }
