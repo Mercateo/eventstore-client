@@ -149,7 +149,7 @@ public class EventMetadataMapperTest {
         val eventInitiatorWithImposter = EventInitiator
             .builder()
             .from(TestData.INITIATOR)
-            .agent(ReferenceData.of(TestData.IMPERSONATOR))
+            .addAgent(ReferenceData.of(TestData.IMPERSONATOR))
             .build();
 
         val serializableMetadata = SerializableMetadata
