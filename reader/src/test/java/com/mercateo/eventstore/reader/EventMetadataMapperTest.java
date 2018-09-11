@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.UUID;
 
+import com.mercateo.eventstore.domain.EventMetadata;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -160,7 +161,7 @@ public class EventMetadataMapperTest {
             .eventInitiator(EventInitiatorData.of(eventInitiatorWithImposter))
             .build();
 
-        val result = uut.mapMetadata(streamMetadata, serializableMetadata).get();
+        EventMetadata result = uut.mapMetadata(streamMetadata, serializableMetadata).get();
 
         assertThat(result.eventInitiator()).containsExactlyInAnyOrder(eventInitiatorWithImposter);
 
