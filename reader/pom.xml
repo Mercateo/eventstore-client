@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>client-reader</artifactId>
-  <version>0.3.4</version>
+  <version>0.3.5-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>client-reader</name>
@@ -12,19 +12,19 @@
     <parent>
         <groupId>com.mercateo.eventstore</groupId>
         <artifactId>parent</artifactId>
-        <version>0.3.4</version>
+        <version>0.3.5-SNAPSHOT</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>com.mercateo.eventstore</groupId>
             <artifactId>client-common</artifactId>
-            <version>0.3.4</version>
+            <version>0.3.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.mercateo.eventstore</groupId>
             <artifactId>client-common</artifactId>
-            <version>0.3.4</version>
+            <version>0.3.5-SNAPSHOT</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
