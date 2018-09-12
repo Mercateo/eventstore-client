@@ -42,7 +42,7 @@ import com.mercateo.immutables.DataClass;
 public interface EventInitiatorData extends Reference {
 
     static EventInitiatorData of(EventInitiator eventInitiator) {
-        return ImmutableEventInitiatorData
+        return eventInitiator == null ? null : ImmutableEventInitiatorData
             .builder()
             .id(eventInitiator.id())
             .type(eventInitiator.type())
@@ -58,9 +58,7 @@ public interface EventInitiatorData extends Reference {
     @Nullable
     String type();
 
-    @NotNull
     Optional<ReferenceData> initiator();
 
-    @NotNull
     List<ReferenceData> agent();
 }

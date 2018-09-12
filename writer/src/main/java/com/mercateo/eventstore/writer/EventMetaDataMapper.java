@@ -52,7 +52,7 @@ public class EventMetaDataMapper {
             .schemaRef(config.eventSchemaRef().value().toString())
             .version(config.eventVersion().value())
             .causality(event.causality().map(CausalityData::of).toJavaArray(CausalityData.class))
-            .eventInitiator(event.eventInitiator().map(EventInitiatorData::of).orElse(null))
+            .eventInitiator(EventInitiatorData.of(event.eventInitiator().orElse(null)))
             .build();
     }
 }

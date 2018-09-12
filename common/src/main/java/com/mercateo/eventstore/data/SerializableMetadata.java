@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.mercateo.eventstore.domain.EventInitiator;
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

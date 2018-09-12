@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.UUID;
 
+import com.mercateo.eventstore.domain.Reference;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -132,11 +133,6 @@ public class SerializableMetadataTest {
         assertThat(result.eventInitiator()).isNotNull();
         assertThat(result.eventInitiator().id()).isNull();
         assertThat(result.eventInitiator().type()).isNull();
-        assertThat(result.eventInitiator().initiator()).isPresent();
-        final ReferenceData referenceData = result.eventInitiator().initiator().get();
-        assertThat(referenceData.id()).isEqualTo(initiatorId);
-        assertThat(referenceData.type()).isEqualTo(initiatorType);
-
-
+        assertThat(result.eventInitiator()).isNotNull();
     }
 }
