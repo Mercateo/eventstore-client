@@ -19,12 +19,12 @@
         <dependency>
             <groupId>com.mercateo.eventstore</groupId>
             <artifactId>client-common</artifactId>
-            <version>0.3.3</version>
+            <version>0.3.2</version>
         </dependency>
         <dependency>
             <groupId>com.mercateo.eventstore</groupId>
             <artifactId>client-common</artifactId>
-            <version>0.3.3</version>
+            <version>0.3.2</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
