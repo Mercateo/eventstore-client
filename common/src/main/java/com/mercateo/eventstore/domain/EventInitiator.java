@@ -40,8 +40,7 @@ public interface EventInitiator extends Reference {
 
     @NotNull
     static EventInitiator of(EventInitiatorData eventInitiatorData) {
-        val referenceData = eventInitiatorData.initiator().orElseGet(() -> ReferenceData.of(eventInitiatorData));
-
+        ReferenceData referenceData = eventInitiatorData.initiator() == null ? ReferenceData.of(eventInitiatorData) : eventInitiatorData.initiator();
         return EventInitiator.builder().from(referenceData).agent(eventInitiatorData.agent()).build();
     }
 

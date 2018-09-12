@@ -37,7 +37,7 @@ import com.mercateo.immutables.DataClass;
 @DataClass
 @JsonSerialize(as = ImmutableEventInitiatorData.class)
 @JsonDeserialize(as = ImmutableEventInitiatorData.class)
-@JsonInclude(Include.NON_NULL)
+@JsonInclude(Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public interface EventInitiatorData extends Reference {
 
@@ -58,7 +58,8 @@ public interface EventInitiatorData extends Reference {
     @Nullable
     String type();
 
-    Optional<ReferenceData> initiator();
+    @Nullable
+    ReferenceData initiator();
 
     List<ReferenceData> agent();
 }
