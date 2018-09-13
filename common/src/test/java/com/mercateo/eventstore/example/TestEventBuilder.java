@@ -10,6 +10,8 @@ import com.github.msemys.esjc.proto.EventStoreClientMessages.EventRecord;
 import com.google.protobuf.ByteString;
 import com.mercateo.eventstore.domain.Event;
 
+import java.util.stream.Collectors;
+
 public class TestEventBuilder {
 
     private JSONObject initiator;
@@ -76,7 +78,8 @@ public class TestEventBuilder {
             .map(eventInitiator -> createReferenceJson(eventInitiator).put("agent", eventInitiator
                 .agent()
                     .stream()
-                    .map(TestEventBuilder::createReferenceJson)))
+                    .map(TestEventBuilder::createReferenceJson)
+                    .collect(Collectors.toList())))
             .orElse(null);
 
         return new JSONObject()
