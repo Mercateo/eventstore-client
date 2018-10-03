@@ -17,10 +17,10 @@ package com.mercateo.eventstore.domain;
 
 import org.immutables.value.Value;
 
-import com.mercateo.immutables.Tuple;
+import com.mercateo.immutables.TupleStyle;
 
 @Value.Immutable
-@Tuple
+@TupleStyle
 public abstract class EventStreamId {
 
     public static EventStreamId of(EventStoreName eventStoreName, EventStreamName eventStreamName) {

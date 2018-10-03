@@ -47,7 +47,7 @@ public class EventSender {
     }
 
     private static EventStoreFailure apply(Throwable throwable) {
-        return EventStoreFailure.builder().type(FailureType.INTERNAL_ERROR).setValueDataTBD(throwable).build();
+        return EventStoreFailure.builder().type(FailureType.INTERNAL_ERROR).dataTBD(throwable).build();
     }
 
     public Either<EventStoreFailure, Void> send(EventWriteData event) {

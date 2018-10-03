@@ -64,7 +64,7 @@ public class EventJsonMapper {
         return EventStoreFailure
             .builder()
             .type(EventStoreFailure.FailureType.INTERNAL_ERROR)
-            .setValueDataTBD(exception)
+            .dataTBD(exception)
             .build();
     }
 

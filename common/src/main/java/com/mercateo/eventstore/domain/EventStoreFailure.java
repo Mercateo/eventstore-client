@@ -30,7 +30,7 @@ public interface EventStoreFailure {
     }
 
     static EventStoreFailure of(Object data) {
-        return builder().type(FailureType.INTERNAL_ERROR).setValueDataTBD(data).build();
+        return builder().type(FailureType.INTERNAL_ERROR).dataTBD(data).build();
     }
 
     FailureType getType();
