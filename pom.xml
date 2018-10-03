@@ -136,7 +136,7 @@
         <dependency>
             <groupId>com.mercateo</groupId>
             <artifactId>default-immutables</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.5</version>
         </dependency>
         <dependency>
             <groupId>com.github.msemys</groupId>

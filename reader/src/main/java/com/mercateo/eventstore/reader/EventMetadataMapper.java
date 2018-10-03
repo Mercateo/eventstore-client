@@ -90,7 +90,7 @@ public class EventMetadataMapper {
         return Try
             .success(builder)
             .map(b -> b.version(EventVersion.of(serializableMetadata.version())))
-            .mapTry(b -> b.setValueEventSchemaRef(EventSchemaRef.of(URI.create(serializableMetadata.schemaRef()))))
+            .mapTry(b -> b.eventSchemaRef(EventSchemaRef.of(URI.create(serializableMetadata.schemaRef()))))
             .onFailure(e -> log.warn("error converting eventSchemaRef '{}'", serializableMetadata.schemaRef(), e))
             .map(b -> (EventMetadata) b.build())
             .toEither()

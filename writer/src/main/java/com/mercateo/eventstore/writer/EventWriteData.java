@@ -21,10 +21,10 @@ import org.immutables.value.Value;
 
 import com.github.msemys.esjc.EventData;
 import com.mercateo.eventstore.domain.EventStreamId;
-import com.mercateo.immutables.Tuple;
+import com.mercateo.immutables.TupleStyle;
 
 @Value.Immutable
-@Tuple
+@TupleStyle
 public interface EventWriteData {
 
     static EventWriteData of(EventStreamId eventStreamId, EventData eventData) {
