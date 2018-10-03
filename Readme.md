@@ -161,4 +161,13 @@ class SomethingHappenedEventConfiguration implements EventConfiguration<Somethin
 }
 ```
 
+## Testing requirements
 
+Create a docker container via
+
+```
+docker pull eventstore/eventstore:latest
+docker run -d -p 2113:2113 -p 1113:1113 eventstore/eventstore:latest
+```
+
+to be able to run the integration tests.
